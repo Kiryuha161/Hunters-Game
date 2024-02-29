@@ -1,0 +1,29 @@
+﻿@using Hunters_Game.Models.Characters
+
+@model List<Hunter>
+
+<form asp-asp-controller="Hunter" asp-action="AddHunters">
+    <input type="submit" value="Добавить охотников" />
+</form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Возраст</th>
+                <th>Сила</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var hunter in Model)
+            {
+                <tr>
+                    <td>@hunter.SecondName @hunter.FirstName</td>
+                    <td>@hunter.Age</td>
+                    <td>@hunter.HunterStats.Strength</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+
