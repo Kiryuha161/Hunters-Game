@@ -1,7 +1,10 @@
 ﻿using System;
+using Hunters_Game.Models;
 using Hunters_Game.Models.Characters;
+using Hunters_Game.Models.Location;
 using Hunters_Game.Models.Stat;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace Hunters_Game.Data
 {
@@ -69,6 +72,12 @@ namespace Hunters_Game.Data
         public DbSet<Hunter> Hunters { get; set; }
         public DbSet<CharacterStat> Stats { get; set; }
         public DbSet<HunterStat> HunterStats { get; set; }
+        public DbSet<Mail> Mails { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Territory> Territories { get; set; }
+        public DbSet<Area> Areas { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<Disctrict> Disctricts { get; set; }
     }
 }
 
