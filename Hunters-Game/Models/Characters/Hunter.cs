@@ -26,7 +26,7 @@ namespace Hunters_Game.Models.Characters
             else
             {
                 FirstName = Utils.GetName("rus", "female");
-                SecondName = Utils.GetSurname("rus", "male");
+                SecondName = Utils.GetSurname("rus", "female");
                 Gender = false;
             }
             

@@ -6,24 +6,39 @@
     <input type="submit" value="Добавить охотников" />
 </form>
 
-    <table>
-        <thead>
+<table class="table table-bordered table-responsive table-striped">
+    <thead>
+        <tr>
+            <th hidden>Id</th>
+            <th>Имя</th>
+            <th>Пол</th>
+            <th>Возраст</th>
+            <th>Дата рождения</th>
+            <th>Характеристики</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var hunter in Model)
+        {
             <tr>
-                <th>Имя</th>
-                <th>Возраст</th>
-                <th>Сила</th>
+                <td hidden>@hunter.CharacterId</td>
+                <td>@hunter.SecondName @hunter.FirstName</td>
+                
+                @if (hunter.Gender)
+                {
+                    <td>Мужской</td>
+                }
+                else
+                {
+                    <td>Женский</td>
+                }
+
+                <td>@hunter.Age</td>
+                <td>@hunter.Birthday.ToString().Replace("0:00:00", "")</td>
+                <td><a class="btn btn-primary" asp-controller="Hunter" asp-action="GetHunterStats" asp-route-id="@hunter.CharacterId">Посмотреть характеристики</a></td>
             </tr>
-        </thead>
-        <tbody>
-            @foreach (var hunter in Model)
-            {
-                <tr>
-                    <td>@hunter.SecondName @hunter.FirstName</td>
-                    <td>@hunter.Age</td>
-                    <td>@hunter.HunterStats.Strength</td>
-                </tr>
-            }
-        </tbody>
-    </table>
+        }
+    </tbody>
+</table>
 
 

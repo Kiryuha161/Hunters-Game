@@ -15,13 +15,31 @@ namespace Hunters_Game.Controllers
         {
             _database = database;
         }
-        
+
         public IActionResult Index()
         {
             List<Hunter> hunters = _database.Hunters.Include(h => h.HunterStats).ToList();
-            
+
             return View(hunters);
         }
+
+        public IActionResult GetHunterStats(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            Hunter hunter = _database.Hunters.Include(h => h.HunterStats).FirstOrDefault(h => h.CharacterId == id);
+
+            if (hunter == null)
+            {
+                return NotFound();
+            }
+
+            return View(hunter);
+        }
+
 
         public IActionResult AddHunters(int count = 3)
         {

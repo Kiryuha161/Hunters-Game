@@ -1,0 +1,82 @@
+﻿@using Hunters_Game.Models.Characters
+
+@model Hunter
+
+<h1 class="mb-5">@Model.SecondName @Model.FirstName</h1>
+<div class="container">
+    <div class="row mb-5">
+        <div class="col-6">
+            @if (Model.Gender)
+            {
+                <img src="~/images/4378ee330c367ead2e2fb115f80cadda3ea2dacb.jpeg" style="width: 100%;"/>
+            }
+            else
+            {
+                <img src="~/images/1666171859_37-mykaleidoscope-ru-p-kostyumi-budushchego-zhenskie-oboi-50.jpg" style="width: 100%;" />
+            }
+        </div>
+        <div class="col-6">
+            <p>Дата рождения: @Model.Birthday.ToString().Replace("0:00:00", "")</p>
+            <p>Возраст: @Model.Age</p>
+            <p>Тип: @Model.Type</p>
+            <p>Деятельность: @Model.Activity</p>
+        </div>
+    </div>
+</div>
+
+<table class="table table-bordered table-responsive table-striped">
+    <thead style="font-size:12px;">
+        <tr>
+            <th hidden>Id</th>
+            <th>Сила</th>
+            <th>Здоровье</th>
+            <th>Реакция</th>
+            <th>Скорость атаки</th>
+            <th>Скорость бега</th>
+            <th>Выносливость</th>
+            <th>Точность</th>
+            <th>Внимательность</th>
+            <th>Смелость</th>
+            <th>Общие знания</th>
+            <th>Знания охотника</th>
+            <th>Ум</th>
+            <th>Память</th>
+            <th>Харизма</th>
+            <th>Скорость мышления</th>
+            <th>Лидерство</th>
+            <th>Сила воли</th>
+            <th>Контроль магии</th>
+            <th>Магия</th>
+            <th>Выживание</th>
+            <th>Знания техники</th>
+            <th>Удача</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td hidden>@Model.CharacterId</td>
+            <td>@Model.HunterStats.Strength</td>
+            <td>@Model.HunterStats.Health</td>
+            <td>@Model.HunterStats.Reaction</td>
+            <td>@Model.HunterStats.SpeedAttack</td>
+            <td>@Model.HunterStats.SpeedMove</td>
+            <td>@Model.HunterStats.Endurance</td>
+            <td>@Model.HunterStats.Acuracy</td>
+            <td>@Model.HunterStats.Attentivines</td>
+            <td>@Model.HunterStats.Brave</td>
+            <td>@Model.HunterStats.GeneralKnowledge</td>
+            <td>@Model.HunterStats.HunterKnowledge</td>
+            <td>@Model.HunterStats.Intellegence</td>
+            <td>@Model.HunterStats.Memory</td>
+            <td>@Model.HunterStats.Charisma</td>
+            <td>@Model.HunterStats.SpeedThinking</td>
+            <td>@Model.HunterStats.Leadership</td>
+            <td>@Model.HunterStats.WillPower</td>
+            <td>@Model.HunterStats.MagicEnegyControl</td>
+            <td>@Model.HunterStats.MagicEnergy</td>
+            <td>@Model.HunterStats.SurvivalSkill</td>
+            <td>@Model.HunterStats.TechnicalSkill
+            <td>@Model.HunterStats.Fortuna</td>
+        </tr>
+    </tbody>
+</table>
