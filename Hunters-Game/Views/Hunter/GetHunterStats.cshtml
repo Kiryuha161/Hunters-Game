@@ -2,13 +2,13 @@
 
 @model Hunter
 
-<h1 class="mb-5">@Model.SecondName @Model.FirstName</h1>
 <div class="container">
+    <h1 class="mb-5">@Model.SecondName @Model.FirstName</h1>
     <div class="row mb-5">
         <div class="col-6">
             @if (Model.Gender)
             {
-                <img src="~/images/4378ee330c367ead2e2fb115f80cadda3ea2dacb.jpeg" style="width: 100%;"/>
+                <img src="~/images/4378ee330c367ead2e2fb115f80cadda3ea2dacb.jpeg" style="width: 100%;" />
             }
             else
             {
@@ -20,63 +20,117 @@
             <p>Возраст: @Model.Age</p>
             <p>Тип: @Model.Type</p>
             <p>Деятельность: @Model.Activity</p>
+            <p title="@Model.Region.Desctription">Регион: @Model.Region.Name</p>
+            <p title="@Model.Territory.Desctription">Территория: @Model.Territory.Name</p>
+            <p title="@Model.Area.Desctription">Область: @Model.Area.Name</p>
+            <p title="@Model.City.Desctription">Город: @Model.City.Name</p>
+            <p title="@Model.Disсtrict.Desctription">Район: @Model.Disсtrict.Name</p>
         </div>
     </div>
 </div>
 
-<table class="table table-bordered table-responsive table-striped">
-    <thead style="font-size:12px;">
-        <tr>
-            <th hidden>Id</th>
-            <th>Сила</th>
-            <th>Здоровье</th>
-            <th>Реакция</th>
-            <th>Скорость атаки</th>
-            <th>Скорость бега</th>
-            <th>Выносливость</th>
-            <th>Точность</th>
-            <th>Внимательность</th>
-            <th>Смелость</th>
-            <th>Общие знания</th>
-            <th>Знания охотника</th>
-            <th>Ум</th>
-            <th>Память</th>
-            <th>Харизма</th>
-            <th>Скорость мышления</th>
-            <th>Лидерство</th>
-            <th>Сила воли</th>
-            <th>Контроль магии</th>
-            <th>Магия</th>
-            <th>Выживание</th>
-            <th>Знания техники</th>
-            <th>Удача</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td hidden>@Model.CharacterId</td>
-            <td>@Model.HunterStats.Strength</td>
-            <td>@Model.HunterStats.Health</td>
-            <td>@Model.HunterStats.Reaction</td>
-            <td>@Model.HunterStats.SpeedAttack</td>
-            <td>@Model.HunterStats.SpeedMove</td>
-            <td>@Model.HunterStats.Endurance</td>
-            <td>@Model.HunterStats.Acuracy</td>
-            <td>@Model.HunterStats.Attentivines</td>
-            <td>@Model.HunterStats.Brave</td>
-            <td>@Model.HunterStats.GeneralKnowledge</td>
-            <td>@Model.HunterStats.HunterKnowledge</td>
-            <td>@Model.HunterStats.Intellegence</td>
-            <td>@Model.HunterStats.Memory</td>
-            <td>@Model.HunterStats.Charisma</td>
-            <td>@Model.HunterStats.SpeedThinking</td>
-            <td>@Model.HunterStats.Leadership</td>
-            <td>@Model.HunterStats.WillPower</td>
-            <td>@Model.HunterStats.MagicEnegyControl</td>
-            <td>@Model.HunterStats.MagicEnergy</td>
-            <td>@Model.HunterStats.SurvivalSkill</td>
-            <td>@Model.HunterStats.TechnicalSkill
-            <td>@Model.HunterStats.Fortuna</td>
-        </tr>
-    </tbody>
-</table>
+<div class="container">
+    <h2 class="mb-3">Характеристики</h2>
+    <table class="table table-bordered table-responsive table-striped">
+        <thead style="font-size:12px;">
+            <tr>
+                <th hidden>Id</th>
+                <th style="width: 9%">Сила</th>
+                <th style="width: 9%">Здоровье</th>
+                <th style="width: 9%">Реакция</th>
+                <th style="width: 9%">Скорость атаки</th>
+                <th style="width: 9%">Скорость бега</th>
+                <th style="width: 9%">Выносливость</th>
+                <th style="width: 9%">Точность</th>
+                <th style="width: 9%">Внимательность</th>
+                <th style="width: 9%">Смелость</th>
+                <th style="width: 9%">Общие знания</th>
+                <th style="width: 9%">Знания охотника</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td hidden>@Model.CharacterId</td>
+                <td>@Model.HunterStats.Strength</td>
+                <td>@Model.HunterStats.Health</td>
+                <td>@Model.HunterStats.Reaction</td>
+                <td>@Model.HunterStats.SpeedAttack</td>
+                <td>@Model.HunterStats.SpeedMove</td>
+                <td>@Model.HunterStats.Endurance</td>
+                <td>@Model.HunterStats.Acuracy</td>
+                <td>@Model.HunterStats.Attentivines</td>
+                <td>@Model.HunterStats.Brave</td>
+                <td>@Model.HunterStats.GeneralKnowledge</td>
+                <td>@Model.HunterStats.HunterKnowledge</td>
+            </tr>
+        </tbody>
+    </table>
+    <table class="table table-bordered table-responsive table-striped">
+        <thead style="font-size:12px;">
+            <tr>
+                <th style="width: 9%">Интеллект</th>
+                <th style="width: 9%">Память</th>
+                <th style="width: 9%">Харизма</th>
+                <th style="width: 9%">Скорость мышления</th>
+                <th style="width: 9%">Лидерство</th>
+                <th style="width: 9%">Сила воли</th>
+                <th style="width: 9%">Контроль магии</th>
+                <th style="width: 9%">Магия</th>
+                <th style="width: 9%">Выживание</th>
+                <th style="width: 9%">Знания техники</th>
+                <th style="width: 9%">Удача</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>@Model.HunterStats.Intellegence</td>
+                <td>@Model.HunterStats.Memory</td>
+                <td>@Model.HunterStats.Charisma</td>
+                <td>@Model.HunterStats.SpeedThinking</td>
+                <td>@Model.HunterStats.Leadership</td>
+                <td>@Model.HunterStats.WillPower</td>
+                <td>@Model.HunterStats.MagicEnegyControl</td>
+                <td>@Model.HunterStats.MagicEnergy</td>
+                <td>@Model.HunterStats.SurvivalSkill</td>
+                <td>@Model.HunterStats.TechnicalSkill
+                <td>@Model.HunterStats.Fortuna</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container">
+    <h2>Бонусы</h2>
+    <h3>Бонусы от города</h3>
+    @if (Model.CityId == 1)
+    {
+        <p title="Скорость передвижения увеличена на 5">Провёл детство на футбольном стадионе в городе Ган</p>
+    }
+    else if (Model.CityId == 2)
+    {
+        <p title="Выносливость увеличена на 5">Проводил часто детство в горной местности в городе Мерра</p>
+    }
+    else if (Model.CityId == 3)
+    {
+        <p title="Интеллект увеличен на 5">Получил хорошее столичное образование в городе Плея</p>
+    } 
+    else if (Model.CityId == 4)
+    {
+        <p title="Охотничьи знания увеличены на 5">Давно увлекался охотничьим делом в городе Аксель</p>
+    } 
+    else if (Model.CityId == 5)
+    {
+        <p title="Харизма увеличена на 5">Провёл детство в окружении весьма харизматичных людей в городе Финея</p>
+    }
+    else if (Model.CityId == 6)
+    {
+        <p title="Здоровье увеличено на 5">Акклиматизирован ко многим условиям и достаточно закалён в нелёгких условиях жизни с детства в городе Рона</p>
+    }
+    else if (Model.CityId == 8)
+    {
+        <p title="Смелость и выживаемость увеличены на 5">Жил в опасных и сложных условиях</p>
+    }
+    else
+    {
+        <p>Не имеет особых бонусов</p>
+    }
+</div>

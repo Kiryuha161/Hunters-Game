@@ -18,7 +18,15 @@ namespace Hunters_Game.Controllers
 
         public IActionResult Index()
         {
-            List<Hunter> hunters = _database.Hunters.Include(h => h.HunterStats).ToList();
+            List<Hunter> hunters = _database.Hunters
+                .Include(h => h.HunterStats)
+                .Include(h => h.Region)
+                .Include(h => h.Territory)
+                .Include(h => h.Area)
+                .Include(h => h.City)
+                .Include(h => h.Disсtrict)
+                .Include(h => h.CurrentLocation)
+                .ToList();
 
             return View(hunters);
         }
@@ -30,7 +38,15 @@ namespace Hunters_Game.Controllers
                 return NotFound();
             }
 
-            Hunter hunter = _database.Hunters.Include(h => h.HunterStats).FirstOrDefault(h => h.CharacterId == id);
+            Hunter hunter = _database.Hunters
+                .Include(h => h.HunterStats)
+                .Include(h => h.Region)
+                .Include(h => h.Territory)
+                .Include(h => h.Area)
+                .Include(h => h.City)
+                .Include(h => h.Disсtrict)
+                .Include(h => h.CurrentLocation)
+                .FirstOrDefault(h => h.CharacterId == id);
 
             if (hunter == null)
             {
@@ -41,7 +57,7 @@ namespace Hunters_Game.Controllers
         }
 
 
-        public IActionResult AddHunters(int count = 3)
+        public IActionResult AddHunters(int count = 1)
         {
             Random random = new Random();
 
@@ -49,7 +65,15 @@ namespace Hunters_Game.Controllers
             {
                 Hunter hunter = new Hunter();
                 hunter.GetRandomInfo();
+                hunter.Region = _database.Regions?.FirstOrDefault(h => h.RegionId == hunter.RegionId);
+                hunter.Territory = _database.Territories?.FirstOrDefault(h => h.TerritoryId == hunter.TerritoryId);
+                hunter.Area = _database.Areas?.FirstOrDefault(h => h.AreaId == hunter.AreaId);
+                hunter.City = _database.Cities?.FirstOrDefault(h => h.CityId == hunter.CityId);
+                hunter.Disсtrict = _database.Districts?.FirstOrDefault(h => h.DistrictId == hunter.DisсtrictId);
+                hunter.CurrentLocation = _database.Districts?.FirstOrDefault(h => h.DistrictId == hunter.CurrentLocationId);
                 _database.Hunters.Add(hunter);
+
+                
             }
 
             _database.SaveChanges();

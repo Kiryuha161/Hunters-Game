@@ -14,6 +14,8 @@
             <th>Пол</th>
             <th>Возраст</th>
             <th>Дата рождения</th>
+            <th>Место рождения</th>
+            <th>Текущая локация</th>
             <th>Характеристики</th>
         </tr>
     </thead>
@@ -35,6 +37,8 @@
 
                 <td>@hunter.Age</td>
                 <td>@hunter.Birthday.ToString().Replace("0:00:00", "")</td>
+                <td title="Регион: @hunter.Region.Name, территория: @hunter.Territory.Name, область: @hunter.Area.Name, город: @hunter.City.Name">@hunter.Disсtrict.Name</td>
+                <td>@hunter.CurrentLocation.Name</td>
                 <td><a class="btn btn-primary" asp-controller="Hunter" asp-action="GetHunterStats" asp-route-id="@hunter.CharacterId">Посмотреть характеристики</a></td>
             </tr>
         }

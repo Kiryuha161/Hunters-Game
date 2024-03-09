@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Hunters_Game.Models.Location;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hunters_Game.Models.Stat
@@ -10,7 +11,7 @@ namespace Hunters_Game.Models.Stat
         [Display(Name = "Знания охотничьего ремесла")]
         public int HunterKnowledge { get; set; }
 
-        public void RandomLowLevelSign(int age, bool isMan)
+        public void RandomLowLevelSign(int age, bool isMan, int cityId)
         {
             Random random = new Random();
 
@@ -37,9 +38,9 @@ namespace Hunters_Game.Models.Stat
                     this.SpeedMove = random.Next(10, 20);
                     this.SpeedThinking = random.Next(10, 30);
                     this.Strength = random.Next(10, 30);
-                    this.TechnicalSkill = random.Next(10, 40);
-                    this.SurvivalSkill = random.Next(10, 40);
-                    this.WillPower = random.Next(0, 40);
+                    this.TechnicalSkill = random.Next(10, 30);
+                    this.SurvivalSkill = random.Next(10, 30);
+                    this.WillPower = random.Next(0, 30);
                 } 
                 else
                 {
@@ -47,7 +48,7 @@ namespace Hunters_Game.Models.Stat
                     this.Attentivines = random.Next(10, 40);
                     this.Brave = random.Next(10, 30);
                     this.Charisma = random.Next(10, 30);
-                    this.Endurance = random.Next(10, 20);
+                    this.Endurance = random.Next(10, 30);
                     this.Fortuna = random.Next(10, 30);
                     this.GeneralKnowledge = random.Next(10, 40);
                     this.Health = random.Next(10, 15);
@@ -120,7 +121,38 @@ namespace Hunters_Game.Models.Stat
                     this.WillPower = random.Next(0, 40);
                 }
             }
-           
+            
+            GetBonusFromCity(cityId);
+        }
+
+        public void GetBonusFromCity(int cityId)
+        {
+            switch(cityId)
+            {
+                case 1:
+                    this.SpeedMove += 5;
+                    break;
+                case 2:
+                    this.Endurance += 5;
+                    break;
+                case 3:
+                    this.Intellegence += 5;
+                    break;
+                case 4:
+                    this.HunterKnowledge += 5;
+                    break;
+                case 5:
+                    this.Charisma += 5;
+                    break;
+                case 6:
+                    this.Health += 5;
+                    break;
+                case 8:
+                    this.Brave += 5;
+                    this.SurvivalSkill += 5;
+                    break;
+                default: break;
+            }
         }
     }
 }

@@ -2,6 +2,7 @@
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection;
 using System;
+using System.ComponentModel;
 
 namespace Hunters_Game.Common.Utils
 {
@@ -155,6 +156,15 @@ namespace Hunters_Game.Common.Utils
             DateTime currentDate = new DateTime(2025, 1, 1);
 
             return currentDate;
+        }
+
+        public static string GetEnumDescription(Enum value)
+        {
+            var field = value.GetType().GetField(value.ToString());
+
+            var attributes = (DescriptionAttribute[])field.GetCustomAttributes(typeof(DescriptionAttribute), false);
+
+            return attributes.Length > 0 ? attributes[0].Description : value.ToString();
         }
     }
 }

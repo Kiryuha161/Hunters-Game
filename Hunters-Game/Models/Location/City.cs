@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Hunters_Game.Models.Characters;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Hunters_Game.Models.Location
@@ -8,18 +9,14 @@ namespace Hunters_Game.Models.Location
         [Key]
         public int CityId { get; set; }
         public string Name { get; set; }
-        public int Disctription { get; set; }
-        [ForeignKey("Area")]
+        public string Desctription { get; set; }
         public int AreaId { get; set; }
+        [ForeignKey("AreaId")]
         public Area Area { get; set; }
-        [ForeignKey("Territory")]
-        public int TerritoryId { get; set; }
-        public Territory Territory { get; set; }
-        [ForeignKey("Region")]
-        public int RegionId { get; set; }
-        public Region Region { get; set; }
-        public Dictionary<string, bool> Monsters { get; set; }
-        public Dictionary<string, bool> MonstersCount { get; set; }
+        public int? CreatureId { get; set; }
+        [ForeignKey("CreatureId")]
+        public List<Creature> Creatures { get; set; }
+        public int DangerRatio { get; set; }
 
     }
 }

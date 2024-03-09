@@ -1,0 +1,32 @@
+﻿namespace Hunters_Game.Common.Enums
+{
+    public enum EnvironmentPropertiesCountEnum
+    {
+        Safety,
+        Money,
+        Scients,
+        Angry,
+        Influence,
+        MilitaryForce,
+        TechnicalEquipment,
+        MagicEquipment,
+        HunterRelative,
+        DemonRelative,
+        VampireRelative,
+        MagRelative,
+        AngelRelative,
+        Gold,
+        Silver,
+        Metall,
+        Stone,
+        Tree,
+        Imiran,
+        Kevlar,
+        Sotal,
+        Pelear,
+        Restal,
+        Merostal,
+        Obsidian,
+        Baltoran
+    }
+}
