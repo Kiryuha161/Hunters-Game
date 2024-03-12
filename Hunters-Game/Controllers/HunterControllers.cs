@@ -26,6 +26,8 @@ namespace Hunters_Game.Controllers
                 .Include(h => h.City)
                 .Include(h => h.Disсtrict)
                 .Include(h => h.CurrentLocation)
+                .Include(h => h.Academy)
+                .Include(h => h.Department)
                 .ToList();
 
             return View(hunters);
@@ -46,6 +48,8 @@ namespace Hunters_Game.Controllers
                 .Include(h => h.City)
                 .Include(h => h.Disсtrict)
                 .Include(h => h.CurrentLocation)
+                .Include(h => h.Academy)
+                .Include(h => h.Department)
                 .FirstOrDefault(h => h.CharacterId == id);
 
             if (hunter == null)
@@ -71,9 +75,9 @@ namespace Hunters_Game.Controllers
                 hunter.City = _database.Cities?.FirstOrDefault(h => h.CityId == hunter.CityId);
                 hunter.Disсtrict = _database.Districts?.FirstOrDefault(h => h.DistrictId == hunter.DisсtrictId);
                 hunter.CurrentLocation = _database.Districts?.FirstOrDefault(h => h.DistrictId == hunter.CurrentLocationId);
+                hunter.Academy = _database.Academies?.FirstOrDefault(h => h.AcademyId == hunter.AcademyId);
+                hunter.Department = _database.Departments?.FirstOrDefault(h => h.DepartmentId == hunter.DepartmentId);
                 _database.Hunters.Add(hunter);
-
-                
             }
 
             _database.SaveChanges();

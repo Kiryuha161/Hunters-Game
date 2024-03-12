@@ -2,8 +2,8 @@
 
 @model List<Hunter>
 
-<form asp-asp-controller="Hunter" asp-action="AddHunters">
-    <input type="submit" value="Добавить охотников" />
+<form class="mb-4" asp-asp-controller="Hunter" asp-action="AddHunters">
+    <input class="btn btn-primary" type="submit" value="Добавить охотников" />
 </form>
 
 <table class="table table-bordered table-responsive table-striped">
@@ -16,6 +16,8 @@
             <th>Дата рождения</th>
             <th>Место рождения</th>
             <th>Текущая локация</th>
+            <th>Академия</th>
+            <th>Департамент</th>
             <th>Характеристики</th>
         </tr>
     </thead>
@@ -39,6 +41,8 @@
                 <td>@hunter.Birthday.ToString().Replace("0:00:00", "")</td>
                 <td title="Регион: @hunter.Region.Name, территория: @hunter.Territory.Name, область: @hunter.Area.Name, город: @hunter.City.Name">@hunter.Disсtrict.Name</td>
                 <td>@hunter.CurrentLocation.Name</td>
+                <td>@hunter.Academy.Name</td>
+                <td>@hunter.Department.Name</td>
                 <td><a class="btn btn-primary" asp-controller="Hunter" asp-action="GetHunterStats" asp-route-id="@hunter.CharacterId">Посмотреть характеристики</a></td>
             </tr>
         }

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hunters_Game.Migrations
 {
     [DbContext(typeof(HunterDbContext))]
-    [Migration("20240309192034_AddAcademyAndDepartmentToHunter")]
+    [Migration("20240309204137_AddAcademyAndDepartmentToHunter")]
     partial class AddAcademyAndDepartmentToHunter
     {
         /// <inheritdoc />
@@ -37,7 +37,7 @@ namespace Hunters_Game.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("DistrictId")
+                    b.Property<int>("DistrictAcademyId")
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
@@ -49,9 +49,27 @@ namespace Hunters_Game.Migrations
 
                     b.HasKey("AcademyId");
 
-                    b.HasIndex("DistrictId");
+                    b.HasIndex("DistrictAcademyId");
 
                     b.ToTable("Academy");
+
+                    b.HasData(
+                        new
+                        {
+                            AcademyId = 1,
+                            Description = "Академия была построена в условиях бушующей популяции и коэффициента, а также в условиях холодного климата на долгое время в одной части и теплого в другой. Этот климатический стык обусловил глубокий интерес местных охотников к влиянию климата и территорий на образовавшуюся популяцию. Другие направления академия также стремиться не забрасывать.",
+                            DistrictAcademyId = 5,
+                            Name = "Руасская академия охоты",
+                            TotalKnowledge = 20
+                        },
+                        new
+                        {
+                            AcademyId = 2,
+                            Description = "Первая академия в ассоциации, наиболее умеренная во всех направлениях, но в то же время наиболее сильная, полная опытнейшими и могущественными охотниками.",
+                            DistrictAcademyId = 8,
+                            Name = "Международный университет охоты",
+                            TotalKnowledge = 65
+                        });
                 });
 
             modelBuilder.Entity("Hunters_Game.Models.Academies.Departments.Department", b =>
@@ -61,9 +79,6 @@ namespace Hunters_Game.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DepartmentId"));
-
-                    b.Property<int>("AcademyId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -78,9 +93,23 @@ namespace Hunters_Game.Migrations
 
                     b.HasKey("DepartmentId");
 
-                    b.HasIndex("AcademyId");
-
                     b.ToTable("Department");
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentId = 1,
+                            Description = "Занимается управлением академией",
+                            HuntersCount = 0,
+                            Name = "Ректорат"
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            Description = "Занимается расследованием различных дел по заявкам от жителей региона",
+                            HuntersCount = 0,
+                            Name = "Следственный департамент"
+                        });
                 });
 
             modelBuilder.Entity("Hunters_Game.Models.Characters.Character", b =>
@@ -316,6 +345,9 @@ namespace Hunters_Game.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DistrictId"));
 
+                    b.Property<int>("AcademyResponsibleId")
+                        .HasColumnType("int");
+
                     b.Property<int>("CityId")
                         .HasColumnType("int");
 
@@ -335,6 +367,8 @@ namespace Hunters_Game.Migrations
 
                     b.HasKey("DistrictId");
 
+                    b.HasIndex("AcademyResponsibleId");
+
                     b.HasIndex("CityId");
 
                     b.ToTable("Districts");
@@ -343,54 +377,61 @@ namespace Hunters_Game.Migrations
                         new
                         {
                             DistrictId = 1,
+                            AcademyResponsibleId = 1,
                             CityId = 2,
-                            DangerRatio = 5,
+                            DangerRatio = 0,
                             Desctription = "Наиболее равнинная часть Мерры",
                             Name = "Северная Мерра"
                         },
                         new
                         {
                             DistrictId = 2,
+                            AcademyResponsibleId = 1,
                             CityId = 2,
-                            DangerRatio = 5,
+                            DangerRatio = 0,
                             Desctription = "Наиболее гористая часть Мерры",
                             Name = "Южная Мерра"
                         },
                         new
                         {
                             DistrictId = 3,
+                            AcademyResponsibleId = 1,
                             CityId = 1,
-                            DangerRatio = 5,
+                            DangerRatio = 0,
                             Desctription = "Ветренное поле, изредка разбавленное домами и промышленными зданиями. Немного разнообразия добавляет футбольный стадион",
                             Name = "Северный Ган"
                         },
                         new
                         {
                             DistrictId = 4,
+                            AcademyResponsibleId = 1,
                             CityId = 1,
-                            DangerRatio = 5,
+                            DangerRatio = 0,
                             Desctription = "Ветренное поле, изредка разбавленное домами и промышленными зданиями",
                             Name = "Южный Ган"
                         },
                         new
                         {
                             DistrictId = 5,
+                            AcademyResponsibleId = 1,
                             CityId = 3,
-                            DangerRatio = 5,
+                            DangerRatio = 0,
                             Desctription = "Часть города Плея, которая неимоверно загружена пробками, в том числе и потому, что там расположена Академия и большинство административных зданий",
                             Name = "Северная Плея"
                         },
                         new
                         {
                             DistrictId = 6,
+                            AcademyResponsibleId = 1,
                             CityId = 3,
-                            DangerRatio = 5,
+                            DangerRatio = 0,
                             Desctription = "Граничащая с областью Марка, представляет собой менее развитую часть города. При этом она менее нагружена.",
                             Name = "Южная Плея"
                         },
                         new
                         {
                             DistrictId = 7,
+                            AcademyResponsibleId = 2,
                             CityId = 4,
                             DangerRatio = 0,
                             Desctription = "Торговая и промышленная часть города.",
@@ -399,6 +440,7 @@ namespace Hunters_Game.Migrations
                         new
                         {
                             DistrictId = 8,
+                            AcademyResponsibleId = 2,
                             CityId = 4,
                             DangerRatio = 0,
                             Desctription = "Административная часть города, в которой находится Первая академия охоты.",
@@ -563,9 +605,6 @@ namespace Hunters_Game.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TerritoryId"));
 
-                    b.Property<int?>("AcademyId")
-                        .HasColumnType("int");
-
                     b.Property<int?>("CreatureId")
                         .HasColumnType("int");
 
@@ -584,8 +623,6 @@ namespace Hunters_Game.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("TerritoryId");
-
-                    b.HasIndex("AcademyId");
 
                     b.HasIndex("RegionId");
 
@@ -814,11 +851,11 @@ namespace Hunters_Game.Migrations
                             MiddleName = "Джуниор",
                             SecondName = "Адамс",
                             Type = "Человек",
-                            AcademyId = 0,
+                            AcademyId = 1,
                             AreaId = 3,
                             CityId = 4,
                             CurrentLocationId = 5,
-                            DepartmentId = 0,
+                            DepartmentId = 1,
                             DisсtrictId = 7,
                             HunterStatsId = 1,
                             RegionId = 1,
@@ -870,24 +907,13 @@ namespace Hunters_Game.Migrations
 
             modelBuilder.Entity("Hunters_Game.Models.Academies.Academy", b =>
                 {
-                    b.HasOne("Hunters_Game.Models.Location.District", "District")
+                    b.HasOne("Hunters_Game.Models.Location.District", "DistrictAcademy")
                         .WithMany()
-                        .HasForeignKey("DistrictId")
+                        .HasForeignKey("DistrictAcademyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("District");
-                });
-
-            modelBuilder.Entity("Hunters_Game.Models.Academies.Departments.Department", b =>
-                {
-                    b.HasOne("Hunters_Game.Models.Academies.Academy", "Academy")
-                        .WithMany()
-                        .HasForeignKey("AcademyId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Academy");
+                    b.Navigation("DistrictAcademy");
                 });
 
             modelBuilder.Entity("Hunters_Game.Models.Characters.Creature", b =>
@@ -947,11 +973,19 @@ namespace Hunters_Game.Migrations
 
             modelBuilder.Entity("Hunters_Game.Models.Location.District", b =>
                 {
+                    b.HasOne("Hunters_Game.Models.Academies.Academy", "AcademyResponsible")
+                        .WithMany()
+                        .HasForeignKey("AcademyResponsibleId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Hunters_Game.Models.Location.City", "City")
                         .WithMany()
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("AcademyResponsible");
 
                     b.Navigation("City");
                 });
@@ -991,10 +1025,6 @@ namespace Hunters_Game.Migrations
 
             modelBuilder.Entity("Hunters_Game.Models.Location.Territory", b =>
                 {
-                    b.HasOne("Hunters_Game.Models.Academies.Academy", null)
-                        .WithMany("ControlledTerritories")
-                        .HasForeignKey("AcademyId");
-
                     b.HasOne("Hunters_Game.Models.Location.Region", "Region")
                         .WithMany()
                         .HasForeignKey("RegionId")
@@ -1077,11 +1107,6 @@ namespace Hunters_Game.Migrations
                     b.Navigation("Region");
 
                     b.Navigation("Territory");
-                });
-
-            modelBuilder.Entity("Hunters_Game.Models.Academies.Academy", b =>
-                {
-                    b.Navigation("ControlledTerritories");
                 });
 
             modelBuilder.Entity("Hunters_Game.Models.Location.Area", b =>

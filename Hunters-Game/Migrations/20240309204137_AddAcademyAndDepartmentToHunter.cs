@@ -2,6 +2,8 @@
 
 #nullable disable
 
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
 namespace Hunters_Game.Migrations
 {
     /// <inheritdoc />
@@ -11,10 +13,11 @@ namespace Hunters_Game.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.AddColumn<int>(
-                name: "AcademyId",
-                table: "Territories",
+                name: "AcademyResponsibleId",
+                table: "Districts",
                 type: "int",
-                nullable: true);
+                nullable: false,
+                defaultValue: 0);
 
             migrationBuilder.AddColumn<int>(
                 name: "AcademyId",
@@ -36,15 +39,15 @@ namespace Hunters_Game.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    DistrictId = table.Column<int>(type: "int", nullable: false),
+                    DistrictAcademyId = table.Column<int>(type: "int", nullable: false),
                     TotalKnowledge = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Academy", x => x.AcademyId);
                     table.ForeignKey(
-                        name: "FK_Academy_Districts_DistrictId",
-                        column: x => x.DistrictId,
+                        name: "FK_Academy_Districts_DistrictAcademyId",
+                        column: x => x.DistrictAcademyId,
                         principalTable: "Districts",
                         principalColumn: "DistrictId",
                         onDelete: ReferentialAction.Cascade);
@@ -58,17 +61,20 @@ namespace Hunters_Game.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    HuntersCount = table.Column<int>(type: "int", nullable: false),
-                    AcademyId = table.Column<int>(type: "int", nullable: false)
+                    HuntersCount = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Department", x => x.DepartmentId);
-                    table.ForeignKey(
-                        name: "FK_Department_Academy_AcademyId",
-                        column: x => x.AcademyId,
-                        principalTable: "Academy",
-                        principalColumn: "AcademyId");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Academy",
+                columns: new[] { "AcademyId", "Description", "DistrictAcademyId", "Name", "TotalKnowledge" },
+                values: new object[,]
+                {
+                    { 1, "Академия была построена в условиях бушующей популяции и коэффициента, а также в условиях холодного климата на долгое время в одной части и теплого в другой. Этот климатический стык обусловил глубокий интерес местных охотников к влиянию климата и территорий на образовавшуюся популяцию. Другие направления академия также стремиться не забрасывать.", 5, "Руасская академия охоты", 20 },
+                    { 2, "Первая академия в ассоциации, наиболее умеренная во всех направлениях, но в то же время наиболее сильная, полная опытнейшими и могущественными охотниками.", 8, "Международный университет охоты", 65 }
                 });
 
             migrationBuilder.UpdateData(
@@ -76,89 +82,77 @@ namespace Hunters_Game.Migrations
                 keyColumn: "CharacterId",
                 keyValue: 1,
                 columns: new[] { "AcademyId", "DepartmentId" },
-                values: new object[] { 0, 0 });
+                values: new object[] { 1, 1 });
+
+            migrationBuilder.InsertData(
+                table: "Department",
+                columns: new[] { "DepartmentId", "Description", "HuntersCount", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Занимается управлением академией", 0, "Ректорат" },
+                    { 2, "Занимается расследованием различных дел по заявкам от жителей региона", 0, "Следственный департамент" }
+                });
 
             migrationBuilder.UpdateData(
                 table: "Districts",
                 keyColumn: "DistrictId",
                 keyValue: 1,
-                column: "DangerRatio",
-                value: 5);
+                columns: new[] { "AcademyResponsibleId", "DangerRatio" },
+                values: new object[] { 1, 0 });
 
             migrationBuilder.UpdateData(
                 table: "Districts",
                 keyColumn: "DistrictId",
                 keyValue: 2,
-                column: "DangerRatio",
-                value: 5);
+                columns: new[] { "AcademyResponsibleId", "DangerRatio" },
+                values: new object[] { 1, 0 });
 
             migrationBuilder.UpdateData(
                 table: "Districts",
                 keyColumn: "DistrictId",
                 keyValue: 3,
-                column: "DangerRatio",
-                value: 5);
+                columns: new[] { "AcademyResponsibleId", "DangerRatio" },
+                values: new object[] { 1, 0 });
 
             migrationBuilder.UpdateData(
                 table: "Districts",
                 keyColumn: "DistrictId",
                 keyValue: 4,
-                column: "DangerRatio",
-                value: 5);
+                columns: new[] { "AcademyResponsibleId", "DangerRatio" },
+                values: new object[] { 1, 0 });
 
             migrationBuilder.UpdateData(
                 table: "Districts",
                 keyColumn: "DistrictId",
                 keyValue: 5,
-                column: "DangerRatio",
-                value: 5);
+                columns: new[] { "AcademyResponsibleId", "DangerRatio" },
+                values: new object[] { 1, 0 });
 
             migrationBuilder.UpdateData(
                 table: "Districts",
                 keyColumn: "DistrictId",
                 keyValue: 6,
-                column: "DangerRatio",
-                value: 5);
+                columns: new[] { "AcademyResponsibleId", "DangerRatio" },
+                values: new object[] { 1, 0 });
 
             migrationBuilder.UpdateData(
-                table: "Territories",
-                keyColumn: "TerritoryId",
-                keyValue: 1,
-                column: "AcademyId",
-                value: null);
+                table: "Districts",
+                keyColumn: "DistrictId",
+                keyValue: 7,
+                column: "AcademyResponsibleId",
+                value: 2);
 
             migrationBuilder.UpdateData(
-                table: "Territories",
-                keyColumn: "TerritoryId",
-                keyValue: 2,
-                column: "AcademyId",
-                value: null);
-
-            migrationBuilder.UpdateData(
-                table: "Territories",
-                keyColumn: "TerritoryId",
-                keyValue: 3,
-                column: "AcademyId",
-                value: null);
-
-            migrationBuilder.UpdateData(
-                table: "Territories",
-                keyColumn: "TerritoryId",
-                keyValue: 4,
-                column: "AcademyId",
-                value: null);
-
-            migrationBuilder.UpdateData(
-                table: "Territories",
-                keyColumn: "TerritoryId",
-                keyValue: 5,
-                column: "AcademyId",
-                value: null);
+                table: "Districts",
+                keyColumn: "DistrictId",
+                keyValue: 8,
+                column: "AcademyResponsibleId",
+                value: 2);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Territories_AcademyId",
-                table: "Territories",
-                column: "AcademyId");
+                name: "IX_Districts_AcademyResponsibleId",
+                table: "Districts",
+                column: "AcademyResponsibleId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Characters_AcademyId",
@@ -171,14 +165,9 @@ namespace Hunters_Game.Migrations
                 column: "DepartmentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Academy_DistrictId",
+                name: "IX_Academy_DistrictAcademyId",
                 table: "Academy",
-                column: "DistrictId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Department_AcademyId",
-                table: "Department",
-                column: "AcademyId");
+                column: "DistrictAcademyId");
 
             migrationBuilder.AddForeignKey(
                 name: "FK_Characters_Academy_AcademyId",
@@ -195,9 +184,9 @@ namespace Hunters_Game.Migrations
                 principalColumn: "DepartmentId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Territories_Academy_AcademyId",
-                table: "Territories",
-                column: "AcademyId",
+                name: "FK_Districts_Academy_AcademyResponsibleId",
+                table: "Districts",
+                column: "AcademyResponsibleId",
                 principalTable: "Academy",
                 principalColumn: "AcademyId");
         }
@@ -214,18 +203,18 @@ namespace Hunters_Game.Migrations
                 table: "Characters");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Territories_Academy_AcademyId",
-                table: "Territories");
-
-            migrationBuilder.DropTable(
-                name: "Department");
+                name: "FK_Districts_Academy_AcademyResponsibleId",
+                table: "Districts");
 
             migrationBuilder.DropTable(
                 name: "Academy");
 
+            migrationBuilder.DropTable(
+                name: "Department");
+
             migrationBuilder.DropIndex(
-                name: "IX_Territories_AcademyId",
-                table: "Territories");
+                name: "IX_Districts_AcademyResponsibleId",
+                table: "Districts");
 
             migrationBuilder.DropIndex(
                 name: "IX_Characters_AcademyId",
@@ -236,8 +225,8 @@ namespace Hunters_Game.Migrations
                 table: "Characters");
 
             migrationBuilder.DropColumn(
-                name: "AcademyId",
-                table: "Territories");
+                name: "AcademyResponsibleId",
+                table: "Districts");
 
             migrationBuilder.DropColumn(
                 name: "AcademyId",

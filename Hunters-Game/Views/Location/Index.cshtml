@@ -1,0 +1,19 @@
+﻿@model Hunters_Game.Models.ViewModel.LocationViewModel
+
+<p>@Model.Districts.Where(d => d.DistrictId == 1).First().Name</p>
+<p>Рейтинг опасности: @Model.Districts.Where(d => d.DistrictId == 1).First().DangerRatio</p>
+
+<p>@Model.Cities.Where(c => c.CityId == 2).First().Name</p>
+<p>Рейтинг опасности: @Model.Cities.Where(d => d.CityId == 2).First().DangerRatio</p>
+
+<p>@Model.Areas.Where(c => c.AreaId == 1).First().Name</p>
+<p>Рейтинг опасности: @Model.Areas.Where(d => d.AreaId == 1).First().DangerRatio</p>
+
+<p>@Model.Territories.Where(c => c.TerritoryId == 1).First().Name</p>
+<p>Рейтинг опасности: @Model.Territories.Where(d => d.TerritoryId == 1).First().DangerRatio</p>
+
+<p>@Model.Regions.Where(c => c.RegionId == 2).First().Name</p>
+<p>Рейтинг опасности: @Model.Regions.Where(d => d.RegionId == 2).First().DangerRatio</p>
+
+
+

@@ -1,6 +1,7 @@
 ﻿using System;
 using Hunters_Game.Common.Enums;
 using Hunters_Game.Models;
+using Hunters_Game.Models.Academies;
 using Hunters_Game.Models.Academies.Departments;
 using Hunters_Game.Models.Characters;
 using Hunters_Game.Models.Location;
@@ -14,6 +15,8 @@ namespace Hunters_Game.Data
     public class HunterDbContext : DbContext
     {
         public HunterDbContext(DbContextOptions<HunterDbContext> dbContextOptions) : base(dbContextOptions) { }
+
+        //В случае новой бд проверить сущность Hunter на соответствие словарей
 
         protected internal virtual void ConfigureEntities(ModelBuilder modelBuilder)
         {
@@ -34,7 +37,9 @@ namespace Hunters_Game.Data
                 AreaId = 3,
                 CityId = 4,
                 DisсtrictId = 7,
-                CurrentLocationId = 5
+                CurrentLocationId = 5,
+                AcademyId = 1,
+                DepartmentId = 1
             });
 
             modelBuilder.Entity<HunterStat>().HasData(new HunterStat
@@ -178,6 +183,27 @@ namespace Hunters_Game.Data
                     Desctription = "Прибрежная часть Ароса и Тиаленда, представляющая собой один из \"краёв\" мира. Коробали там не ходят, разве что " +
                     "теплоходы на экскурсию, зато это очень распространённое место для отдыха туристов.",
                     TerritoryId = 5
+                },
+                new Area
+                {
+                    AreaId = 4,
+                    Name = "Платор",
+                    Desctription = "Одна из областей Изомара.",
+                    TerritoryId = 2
+                },
+                new Area
+                {
+                    AreaId = 5,
+                    Name = "Гилнорт",
+                    Desctription = "Одна из областей Вусла.",
+                    TerritoryId = 3
+                },
+                new Area
+                {
+                    AreaId = 6,
+                    Name = "Накра",
+                    Desctription = "Одна из областей Сириба",
+                    TerritoryId = 4
                 });
 
             modelBuilder.Entity<City>().HasData(
@@ -210,10 +236,36 @@ namespace Hunters_Game.Data
                     Desctription = "Город, породивший ассоциацию и первую академию охоты. Достаточно безопасная часть суши, охраняемая горами и реками, " +
                     "ведущими к Великому морю",
                     AreaId = 3
+                },
+                new City
+                {
+                    CityId = 5,
+                    Name = "Финея",
+                    Desctription = "Город области Платор в Изомаре, полный талантливых и творческих людей. Отсюда вышло множество звёзд и артистов.",
+                    AreaId = 4
+                },
+                new City
+                {
+                    CityId = 6,
+                    Name = "Рона",
+                    Desctription = "Город области Гилнорт в Вусле, где климат достаточно разнообразен. Зимой там чрезвычайно холодно, а летом население " +
+                    "терпит сильнейшую жару. Из-за этого у его жителей хорошая акклиматизация и сильный иммунитет.",
+                    AreaId = 5
+                },
+                new City
+                {
+                    CityId = 7,
+                    Name = "Сноуден",
+                    Desctription = "Город области Накра в Сирибе, где население терпит сильнейшие морозы, банды мародёров, гигантов и вампиров.",
+                    AreaId = 6
                 });
 
             Random random = new Random();
             int dangerRatioRandom = random.Next(0, 10);
+
+            modelBuilder.Entity<District>()
+               .HasIndex(d => d.AcademyResponsibleId)
+               .IsUnique(false);
 
             modelBuilder.Entity<District>().HasData(
                 new District
@@ -222,7 +274,8 @@ namespace Hunters_Game.Data
                     Name = "Северная Мерра",
                     Desctription = "Наиболее равнинная часть Мерры",
                     CityId = 2,
-                    DangerRatio = dangerRatioRandom
+                    DangerRatio = dangerRatioRandom,
+                    AcademyResponsibleId = 1
                 },
                 new District
                 {
@@ -230,7 +283,8 @@ namespace Hunters_Game.Data
                     Name = "Южная Мерра",
                     Desctription = "Наиболее гористая часть Мерры",
                     CityId = 2,
-                    DangerRatio = dangerRatioRandom
+                    DangerRatio = dangerRatioRandom,
+                    AcademyResponsibleId = 1
                 },
                 new District
                 {
@@ -238,7 +292,8 @@ namespace Hunters_Game.Data
                     Name = "Северный Ган",
                     Desctription = "Ветренное поле, изредка разбавленное домами и промышленными зданиями. Немного разнообразия добавляет футбольный стадион",
                     CityId = 1,
-                    DangerRatio = dangerRatioRandom
+                    DangerRatio = dangerRatioRandom,
+                    AcademyResponsibleId = 1
                 },
                 new District
                 {
@@ -246,7 +301,8 @@ namespace Hunters_Game.Data
                     Name = "Южный Ган",
                     Desctription = "Ветренное поле, изредка разбавленное домами и промышленными зданиями",
                     CityId = 1,
-                    DangerRatio = dangerRatioRandom
+                    DangerRatio = dangerRatioRandom,
+                    AcademyResponsibleId = 1
                 },
                 new District
                 {
@@ -255,7 +311,8 @@ namespace Hunters_Game.Data
                     Desctription = "Часть города Плея, которая неимоверно загружена пробками, в том числе и потому, что там расположена Академия и " +
                     "большинство административных зданий",
                     CityId = 3,
-                    DangerRatio = dangerRatioRandom
+                    DangerRatio = dangerRatioRandom,
+                    AcademyResponsibleId = 1
                 },
                 new District
                 {
@@ -263,22 +320,115 @@ namespace Hunters_Game.Data
                     Name = "Южная Плея",
                     Desctription = "Граничащая с областью Марка, представляет собой менее развитую часть города. При этом она менее нагружена.",
                     CityId = 3,
-                    DangerRatio = dangerRatioRandom
+                    DangerRatio = dangerRatioRandom,
+                    AcademyResponsibleId = 1
                 },
                 new District
                 {
                     DistrictId = 7,
                     Name = "Северный Аксель",
                     Desctription = "Торговая и промышленная часть города.",
-                    CityId = 4
+                    CityId = 4,
+                    AcademyResponsibleId = 2
                 },
                 new District
                 {
                     DistrictId = 8,
                     Name = "Южный Аксель",
                     Desctription = "Административная часть города, в которой находится Первая академия охоты.",
-                    CityId = 4
-                }
+                    CityId = 4,
+                    AcademyResponsibleId = 2
+                },
+                new District
+                {
+                    DistrictId = 9,
+                    Name = "Северная Финея",
+                    Desctription = "Северная часть города Финея",
+                    CityId = 5,
+                    AcademyResponsibleId = 1
+                },
+                new District
+                {
+                    DistrictId = 10,
+                    Name = "Южная Финея",
+                    Desctription = "Южная часть города Финея",
+                    CityId = 5,
+                    AcademyResponsibleId = 1
+                },
+                new District
+                {
+                    DistrictId = 11,
+                    Name = "Северная Рона",
+                    Desctription = "Северная часть города Рона",
+                    CityId = 6,
+                    AcademyResponsibleId = 1
+                },
+                new District
+                {
+                    DistrictId = 12,
+                    Name = "Южная Рона",
+                    Desctription = "Южная часть города Рона",
+                    CityId = 6,
+                    AcademyResponsibleId = 1
+                },
+                new District
+                {
+                    DistrictId = 13,
+                    Name = "Северный Сноуден",
+                    Desctription = "Северная часть города Сноуден",
+                    CityId = 7,
+                    AcademyResponsibleId = 1
+                },
+                new District
+                {
+                    DistrictId = 14,
+                    Name = "Южный Сноуден",
+                    Desctription = "Южная часть города Сноуден",
+                    CityId = 7,
+                    AcademyResponsibleId = 1
+                });
+
+            modelBuilder.Entity<Academy>().HasData(
+                   new Academy
+                   {
+                       AcademyId = 1,
+                       Name = "Руасская академия охоты",
+                       Description = "Академия была построена в условиях бушующей популяции и коэффициента, а также в условиях холодного климата на долгое " +
+                       "время в одной части и теплого в другой. Этот климатический стык обусловил глубокий интерес местных охотников к влиянию климата и " +
+                       "территорий на образовавшуюся популяцию. Другие направления академия также стремиться не забрасывать.",
+                       TotalKnowledge = 20,
+                       DistrictAcademyId = 5,
+                   },
+                   new Academy
+                   {
+                       AcademyId = 2,
+                       Name = "Международный университет охоты",
+                       Description = "Первая академия в ассоциации, наиболее умеренная во всех направлениях, но в то же время наиболее сильная, полная " +
+                       "опытнейшими и могущественными охотниками.",
+                       TotalKnowledge = 65,
+                       DistrictAcademyId = 8,
+                   });
+
+            modelBuilder.Entity<Department>().HasData(
+                    new Department
+                    {
+                        DepartmentId = 1,
+                        Name = "Ректорат",
+                        Description = "Занимается управлением академией"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 2,
+                        Name = "Следственный департамент",
+                        Description = "Занимается расследованием различных дел по заявкам от жителей региона"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 3,
+                        Name = "Департамент резерва",
+                        Description = "Сюда попадают охотники после бакалавриата в академии, а также те, кто пока не попал в другие департаменты. " +
+                        "Занимаются помощью другим департаментам в случае необходимости."
+                    }
                 );
 
             modelBuilder.Entity<Hunter>()
@@ -322,12 +472,6 @@ namespace Hunters_Game.Data
                 .HasForeignKey(h => h.AcademyId)
                 .OnDelete(DeleteBehavior.NoAction);
 
-            modelBuilder.Entity<Department>()
-                .HasOne(h => h.Academy)
-                .WithMany()
-                .HasForeignKey(h => h.AcademyId)
-                .OnDelete(DeleteBehavior.NoAction);
-
             modelBuilder.Entity<Hunter>()
                 .HasOne(h => h.Department)
                 .WithMany()
@@ -339,6 +483,12 @@ namespace Hunters_Game.Data
              .WithOne()
              .HasForeignKey("DistrictId")
              .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<District>()
+                .HasOne(d => d.AcademyResponsible)
+                .WithMany()
+                .HasForeignKey(a => a.AcademyResponsibleId)
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Area>()
                 .HasMany(a => a.Creatures)
@@ -385,6 +535,9 @@ namespace Hunters_Game.Data
         public DbSet<EnvironmentPropertiesDescription> EnvironmentPropertiesDescriptions { get; set; }
         public DbSet<EnvironmentPropertiesCount> EnvironmentPropertiesCounts { get; set; }
         public DbSet<EnvironmentPropertiesBoolean> EnvironmentPropertiesBooleans { get; set; }
+        public DbSet<Academy> Academies { get; set; }
+
+        public DbSet<Department> Departments { get; set; }
     }
 }
 

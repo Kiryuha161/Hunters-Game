@@ -52,9 +52,9 @@ namespace Hunters_Game.Models.Characters
             Dictionary<int, List<int>> territoryAreaMap = new Dictionary<int, List<int>>()
             {
                 { 1, new List<int>() { 1, 2} },
-                { 2, new List<int>() { 11 } },
-                { 3, new List<int>() { 12 } },
-                { 4, new List<int>() { 13 } },
+                { 2, new List<int>() { 4 } },
+                { 3, new List<int>() { 5 } },
+                { 4, new List<int>() { 6 } },
                 { 5, new List<int>() { 3 } }
             };
             Dictionary<int, List<int>> areaCityMap = new Dictionary<int, List<int>>
@@ -62,9 +62,9 @@ namespace Hunters_Game.Models.Characters
                 { 1, new List<int>() {1, 2 } },
                 { 2, new List<int>() { 3 } },
                 { 3, new List<int>() { 4 } },
-                { 11, new List<int>() { 5 } },
-                { 12, new List<int>() { 6 } },
-                { 13, new List<int>() { 8 } }
+                { 4, new List<int>() { 5 } },
+                { 5, new List<int>() { 6 } },
+                { 6, new List<int>() { 7 } }
             };
             Dictionary<int, List<int>> cityDistrictsMap = new Dictionary<int, List<int>>
             {
@@ -72,9 +72,9 @@ namespace Hunters_Game.Models.Characters
                 { 2, new List<int>() { 1, 2} },
                 { 3, new List<int>() { 5, 6} },
                 { 4, new List<int>() { 7, 8} },
-                { 5, new List<int>() { 9, 11} },
-                { 6, new List<int>() { 12, 13} },
-                { 8, new List<int>() { 14, 15} }
+                { 5, new List<int>() { 9, 10} },
+                { 6, new List<int>() { 11, 12} },
+                { 7, new List<int>() { 13, 14} }
             };
 
             if (random.Next(0, 101) < 65)
@@ -116,6 +116,8 @@ namespace Hunters_Game.Models.Characters
 
             hunterStat.RandomLowLevelSign(Age, Gender, CityId);
             HunterStats = hunterStat;
+            AcademyId = 1;
+            DepartmentId = 3;
         }
     }
 }

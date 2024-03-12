@@ -8,11 +8,11 @@
         <div class="col-6">
             @if (Model.Gender)
             {
-                <img src="~/images/4378ee330c367ead2e2fb115f80cadda3ea2dacb.jpeg" style="width: 100%;" />
+                <img src="~/images/4378ee330c367ead2e2fb115f80cadda3ea2dacb.jpeg" style="width: 100%; height: 700px;" />
             }
             else
             {
-                <img src="~/images/1666171859_37-mykaleidoscope-ru-p-kostyumi-budushchego-zhenskie-oboi-50.jpg" style="width: 100%;" />
+                <img src="~/images/1666171859_37-mykaleidoscope-ru-p-kostyumi-budushchego-zhenskie-oboi-50.jpg" style="width: 100%; height: 700px;" />
             }
         </div>
         <div class="col-6">
@@ -20,11 +20,14 @@
             <p>Возраст: @Model.Age</p>
             <p>Тип: @Model.Type</p>
             <p>Деятельность: @Model.Activity</p>
+            <p>Текущее местоположение: @Model.CurrentLocation.Name</p>
             <p title="@Model.Region.Desctription">Регион: @Model.Region.Name</p>
             <p title="@Model.Territory.Desctription">Территория: @Model.Territory.Name</p>
             <p title="@Model.Area.Desctription">Область: @Model.Area.Name</p>
             <p title="@Model.City.Desctription">Город: @Model.City.Name</p>
             <p title="@Model.Disсtrict.Desctription">Район: @Model.Disсtrict.Name</p>
+            <p title="@Model.Academy.Description">Академия: @Model.Academy.Name</p>
+            <p title="@Model.Department.Description">Департамент: @Model.Department.Name</p>
         </div>
     </div>
 </div>
@@ -127,7 +130,7 @@
     }
     else if (Model.CityId == 8)
     {
-        <p title="Смелость и выживаемость увеличены на 5">Жил в опасных и сложных условиях</p>
+        <p title="Смелость и выживаемость увеличены на 5">Жил в опасных и сложных условиях в городе Сноуден</p>
     }
     else
     {

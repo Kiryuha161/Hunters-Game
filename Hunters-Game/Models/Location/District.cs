@@ -1,4 +1,5 @@
-﻿using Hunters_Game.Models.Characters;
+﻿using Hunters_Game.Models.Academies;
+using Hunters_Game.Models.Characters;
 using Hunters_Game.Models.Location.LocationProperties;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -19,5 +20,8 @@ namespace Hunters_Game.Models.Location
         [ForeignKey("CityId")]
         public City City { get; set; }
         public int DangerRatio { get; set; }
+        public int AcademyResponsibleId { get; set; }
+        [ForeignKey("AcademyResponsibleId")]
+        public Academy AcademyResponsible { get; set; }
     }
 }
