@@ -2,6 +2,7 @@
 using Hunters_Game.Models.Location;
 using Hunters_Game.Models.ViewModel;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hunters_Game.Controllers
 {
@@ -82,7 +83,7 @@ namespace Hunters_Game.Controllers
 
         public ActionResult Index()
         {
-            var cities = _database.Cities.ToList();
+            var cities = _database.Cities.Include(c => c.Area).ToList();
             foreach (var city in cities)
             {
                 city.DangerRatio = _database.Districts
@@ -90,7 +91,7 @@ namespace Hunters_Game.Controllers
                   .Sum(d => d.DangerRatio);
             }
 
-            var areas = _database.Areas.ToList();
+            var areas = _database.Areas.Include(a => a.Territory).ToList();
             foreach (var area in areas)
             {
                 area.DangerRatio = _database.Cities
@@ -98,7 +99,7 @@ namespace Hunters_Game.Controllers
                   .Sum(c => c.DangerRatio);
             }
 
-            var territories = _database.Territories.ToList();
+            var territories = _database.Territories.Include(t => t.Region).ToList();
             foreach (var territory in territories)
             {
                 territory.DangerRatio = _database.Areas
@@ -118,7 +119,7 @@ namespace Hunters_Game.Controllers
 
             var model = new LocationViewModel
             {
-                Districts = _database.Districts.ToList(),
+                Districts = _database.Districts.Include(d => d.AcademyResponsible).ToList(),
                 Cities = cities,
                 Areas = areas,
                 Territories = territories,

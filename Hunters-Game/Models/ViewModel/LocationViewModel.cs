@@ -1,4 +1,5 @@
-﻿using Hunters_Game.Models.Location;
+﻿using Hunters_Game.Models.Academies;
+using Hunters_Game.Models.Location;
 
 namespace Hunters_Game.Models.ViewModel
 {
@@ -9,5 +10,6 @@ namespace Hunters_Game.Models.ViewModel
         public IEnumerable<Area> Areas { get; set; }
         public IEnumerable<City> Cities { get; set; }
         public IEnumerable<District> Districts { get; set; }
+        //public IEnumerable<Academy> Academies { get; set; }
     }
 }

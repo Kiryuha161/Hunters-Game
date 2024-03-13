@@ -1,19 +1,146 @@
 ﻿@model Hunters_Game.Models.ViewModel.LocationViewModel
 
-<p>@Model.Districts.Where(d => d.DistrictId == 1).First().Name</p>
-<p>Рейтинг опасности: @Model.Districts.Where(d => d.DistrictId == 1).First().DangerRatio</p>
+<div class="container">
+    <h1 class="mb-5">Локации</h1>
+</div>
 
-<p>@Model.Cities.Where(c => c.CityId == 2).First().Name</p>
-<p>Рейтинг опасности: @Model.Cities.Where(d => d.CityId == 2).First().DangerRatio</p>
+<section class="districts-and-cities mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 districts-block">
+                <h2>Районы</h2>
+                <div>
+                    <table class="table table-bordered table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Коэффициент опасности</th>
+                                <th>Ответственная академия</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var district in Model.Districts)
+                            {
+                                <tr>
+                                    <td title="@district.Desctription"><a href="#">@district.Name</a></td>
+                                    <td>@district.DangerRatio</td>
+                                    <td title="@district.AcademyResponsible.Description"><a href="#">@district.AcademyResponsible.Name</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-6 cities-block">
+                <h2>Города</h2>
+                <div>
+                    <table class="table table-bordered table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Коэффициент опасности</th>
+                                <th>Область</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var city in Model.Cities)
+                            {
+                                <tr>
+                                    <td title="@city.Desctription"><a href="#">@city.Name</a></td>
+                                    <td>@city.DangerRatio</td>
+                                    <td title="@city.Area.Desctription"><a href="#">@city.Area.Name</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="areas-and-territories">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 areas-block">
+                <h2>Области</h2>
+                <div>
+                    <table class="table table-bordered table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Коэффициент опасности</th>
+                                <th>Территория</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var area in Model.Areas)
+                            {
+                                <tr>
+                                    <td title="@area.Desctription"><a href="#">@area.Name</a></td>
+                                    <td>@area.DangerRatio</td>
+                                    <td title="@area.Territory.Desctription"><a href="#">@area.Territory.Name</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-6 territories-block">
+                <h2>Территории</h2>
+                <div>
+                    <table class="table table-bordered table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Коэффициент опасности</th>
+                                <th>Регион</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var territory in Model.Territories)
+                            {
+                                <tr>
+                                    <td title="@territory.Desctription"><a href="#">@territory.Name</a></td>
+                                    <td>@territory.DangerRatio</td>
+                                    <td title="@territory.Region.Desctription"><a href="#">@territory.Region.Name</a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="regions">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 regions-block">
+                <h2>Регионы</h2>
+                <div>
+                    <table class="table table-bordered table-responsive table-striped">
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Коэффициент опасности</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var region in Model.Regions)
+                            {
+                                <tr>
+                                    <td title="@region.Desctription"><a href="#">@region.Name</a></td>
+                                    <td>@region.DangerRatio</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<p>@Model.Areas.Where(c => c.AreaId == 1).First().Name</p>
-<p>Рейтинг опасности: @Model.Areas.Where(d => d.AreaId == 1).First().DangerRatio</p>
-
-<p>@Model.Territories.Where(c => c.TerritoryId == 1).First().Name</p>
-<p>Рейтинг опасности: @Model.Territories.Where(d => d.TerritoryId == 1).First().DangerRatio</p>
-
-<p>@Model.Regions.Where(c => c.RegionId == 2).First().Name</p>
-<p>Рейтинг опасности: @Model.Regions.Where(d => d.RegionId == 2).First().DangerRatio</p>
 
 
 
