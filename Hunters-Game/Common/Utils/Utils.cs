@@ -140,10 +140,10 @@ namespace Hunters_Game.Common.Utils
             return new DateTime(year, month, day);
         }
 
-        public static int GetAge(DateTime birthDate, DateTime dateNow)
+        public static int СalculateDateDifference(DateTime targetDate, DateTime dateNow)
         {
-            int age = dateNow.Year - birthDate.Year;
-            if (dateNow < birthDate.AddYears(age))
+            int age = dateNow.Year - targetDate.Year;
+            if (dateNow < targetDate.AddYears(age))
             {
                 age--;
             }

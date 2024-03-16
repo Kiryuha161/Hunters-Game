@@ -10,6 +10,7 @@ namespace Hunters_Game.Models.Academies.Departments
         public string Name { get; set; }
         public string Description { get; set; }
         public int HuntersCount { get; set; }
+        public string PostName { get; set; }
         //public int SquadsCount { get; set; }
         //public List<Squad> Squads { get; set; }
 

@@ -1,6 +1,6 @@
 ﻿using Hunters_Game.Data;
 using Hunters_Game.Models.Location;
-using Hunters_Game.Models.ViewModel;
+using Hunters_Game.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 

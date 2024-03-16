@@ -6,6 +6,7 @@ using Hunters_Game.Models.Academies.Departments;
 using Hunters_Game.Models.Characters;
 using Hunters_Game.Models.Location;
 using Hunters_Game.Models.Location.LocationProperties;
+using Hunters_Game.Models.Ranks;
 using Hunters_Game.Models.Stat;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
@@ -14,6 +15,31 @@ namespace Hunters_Game.Data
 {
     public class HunterDbContext : DbContext
     {
+        public DbSet<Character> Characters { get; set; }
+        public DbSet<Hunter> Hunters { get; set; }
+        public DbSet<CharacterStat> Stats { get; set; }
+        public DbSet<HunterStat> HunterStats { get; set; }
+        public DbSet<Mail> Mails { get; set; }
+        public DbSet<Region> Regions { get; set; }
+        public DbSet<Territory> Territories { get; set; }
+        public DbSet<Area> Areas { get; set; }
+        public DbSet<City> Cities { get; set; }
+        public DbSet<District> Districts { get; set; }
+        public DbSet<Creature> Creatures { get; set; }
+        public DbSet<EnvironmentPropertiesDescription> EnvironmentPropertiesDescriptions { get; set; }
+        public DbSet<EnvironmentPropertiesCount> EnvironmentPropertiesCounts { get; set; }
+        public DbSet<EnvironmentPropertiesBoolean> EnvironmentPropertiesBooleans { get; set; }
+        public DbSet<Academy> Academies { get; set; }
+
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<AcademicDegree> AcademicDegrees { get; set; }
+        public DbSet<AcademicRank> AcademicRanks { get; set; }
+        public DbSet<Level> Levels { get; set; }
+        public DbSet<PostGrade> PostGrades { get; set; }
+        public DbSet<Rank> Ranks { get; set; }
+        public DbSet<TheoryDegree> TheoryDegrees { get; set; }
+        public DbSet<Status> Statuts { get; set; }
+
         public HunterDbContext(DbContextOptions<HunterDbContext> dbContextOptions) : base(dbContextOptions) { }
 
         //В случае новой бд проверить сущность Hunter на соответствие словарей
@@ -39,34 +65,44 @@ namespace Hunters_Game.Data
                 DisсtrictId = 7,
                 CurrentLocationId = 5,
                 AcademyId = 1,
-                DepartmentId = 1
+                DepartmentId = 1,
+                Rate = 4.34f,
+                RankId = 4,
+                LevelId = 6,
+                PostGradeId = 5,
+                TheoryDegreeId = 5,
+                AcademicDegreeId = 2,
+                AcademicRankId = 3,
+                StatusId = 3,
+                StartHunt = new DateTime(2014, 09, 1),
+                Stage = 11
             });
 
             modelBuilder.Entity<HunterStat>().HasData(new HunterStat
             {
-                Acuracy = 50,
-                Attentivines = 50,
-                Brave = 50,
+                Acuracy = 67,
+                Attentivines = 62,
+                Brave = 76,
                 HunterId = 1,
-                Charisma = 50,
-                Endurance = 50,
-                Fortuna = 50,
-                GeneralKnowledge = 50,
-                Health = 50,
-                HunterKnowledge = 50,
-                Intellegence = 50,
-                Leadership = 50,
-                MagicEnegyControl = 30,
-                MagicEnergy = 50,
-                Memory = 50,
-                Reaction = 50,
-                Strength = 50,
-                SpeedAttack = 50,
-                SpeedMove = 50,
-                SpeedThinking = 50,
-                SurvivalSkill = 50,
-                TechnicalSkill = 50,
-                WillPower = 50,
+                Charisma = 64,
+                Endurance = 56,
+                Fortuna = 76,
+                GeneralKnowledge = 68,
+                Health = 86,
+                HunterKnowledge = 94,
+                Intellegence = 89,
+                Leadership = 62,
+                MagicEnegyControl = 75,
+                MagicEnergy = 76,
+                Memory = 66,
+                Reaction = 62,
+                Strength = 76,
+                SpeedAttack = 68,
+                SpeedMove = 65,
+                SpeedThinking = 75,
+                SurvivalSkill = 84,
+                TechnicalSkill = 94,
+                WillPower = 75,
                 CharacterStatId = 1
             });
 
@@ -414,20 +450,347 @@ namespace Hunters_Game.Data
                     {
                         DepartmentId = 1,
                         Name = "Ректорат",
-                        Description = "Занимается управлением академией"
+                        Description = "Занимается управлением академией",
+                        PostName = "Член ректората"
                     },
                     new Department
                     {
                         DepartmentId = 2,
                         Name = "Следственный департамент",
-                        Description = "Занимается расследованием различных дел по заявкам от жителей региона"
+                        Description = "Департамент расследований - одно из приоритетных направлений в охоте. Занимаются тем, что расследуют заявления населения, " +
+                        "выполняют расследования при происшествиях, выполняют поручения департамента хранителей, в случае необходимости",
+                        PostName = "Следователь"
                     },
                     new Department
                     {
                         DepartmentId = 3,
                         Name = "Департамент резерва",
                         Description = "Сюда попадают охотники после бакалавриата в академии, а также те, кто пока не попал в другие департаменты. " +
-                        "Занимаются помощью другим департаментам в случае необходимости."
+                        "Занимаются помощью другим департаментам в случае необходимости.",
+                        PostName = "Охотник резерва"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 4,
+                        Name = "Военный департамент",
+                        Description  = "Занимается патрулированием населённых пунктов, защитными и атакующими военными действиями, обеспечением порядка, подключением " +
+                        "к устранению, задержаний и запечатыванию существ, разведкой территорий и так далее.",
+                        PostName = "Военный охотник"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 5,
+                        Name = "Биологический департамент",
+                        Description = "Биологический департамент - департамент, занимается исследованием существ, сбором, изучением и выращиванием трав, изучением климата и " +
+                        "так далее",
+                        PostName = "Биолог"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 6,
+                        Name = "Инженерный департамент",
+                        Description = "Инженерный департамент занимается производством, хранением, обслуживанием, проектированием технической части, " +
+                        "а также выступает поддержкой во время операций",
+                        PostName = "Инженер"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 7,
+                        Name = "Департамент хранителей",
+                        Description = "Департамент хранителей - важный департамент, занимающийся внешней и внутренней разведкой, тайными операциями, переговорами с" +
+                        " высшими существами",
+                        PostName = "Хранитель"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 8,
+                        Name = "Департамент магии",
+                        Description = "Департамент магии занимается изучением магии, артефактов, борется с магами. Магия требует большой силы воли, так как сводит с ума",
+                        PostName = "Охотник магического департамента"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 9,
+                        Name = "Медицинский департамент",
+                        Description = "Медицинский департамент - департамент, занимающийся лечением пострадавших охотников и оказыванием медицинской " +
+                        "поддержки во время операций",
+                        PostName = "Медик"
+                    },
+                    new Department
+                    {
+                        DepartmentId = 10,
+                        Name = "Департамент искателей",
+                        Description = "Департамент искателей занимается поиском магических артефактов и их исследованием",
+                        PostName = "Хранитель"
+                    }
+                );
+
+            modelBuilder.Entity<Level>().HasData(
+                    new Level
+                    {
+                        LevelId = 1,
+                        Name = "Новичок",
+                        Description = "Как правило, это охотники, недавно выпустившиеся из академии и проходящие стажировку. Им следует давать самые лёгкие задачи (E), " +
+                        "шанс на печальные последствия от которых минимальны. Так же им необходимо кураторство более опытных охотников, чтобы эффективность их" +
+                        " работы была более-менее положительна. Он может занимать должность не выше младшего охотника. Эквивалентно рядовому-ефрейтору в " +
+                        "зависимости от опыта и личных качеств.",
+                        LevelType = LevelType.Rookie
+                    },
+                    new Level
+                    {
+                        LevelId = 2,
+                        Name = "Подмастерье",
+                        Description = "Этот охотник прошёл этап стажировки и уже способен выполнять более сложные задачи (E, D) под руководством своего начальства. " +
+                        "Растёт он благодаря опыту, системе обучения от департамента и академии, а также благодаря выбранному куратору - охотнику с уровнем не ниже мастера." +
+                        "Он может занимать должность младший охотник или охотник специалист, в зависимости от ранга. Эквивалентно мл.сержанту-старшине в зависимости от ранга.",
+                        LevelType = LevelType.Apprentice
+                    },
+                    new Level
+                    {
+                        LevelId = 3,
+                        Name = "Специалист",
+                        Description = "Охотник, который получил уровень специалиста, уже способен выполнять лёгкие задачи повышенной сложности (D) самостоятельно." +
+                        " Может иметь должность охотник-специалист. Эквивалентно мл.лейтенанту-ст.лейтенанту в зависимости от ранга.",
+                        LevelType = LevelType.Specialist
+                    },
+                    new Level
+                    {
+                        LevelId = 4,
+                        Name = "Эксперт",
+                        Description = "Достаточно опытный охотник, способный браться за задачи средней сложности (C, B) самостоятельно в качестве лидера группы и успешно привести " +
+                        "её к успеху. Может занимать должность охотник-специалист или старший охотник, в зависимости от ранга. Во втором случае способен возглавлять " +
+                        "управление по областям. Эквивалентно капитану-майору в зависимости от ранга.",
+                        LevelType = LevelType.Expert
+                    },
+                    new Level
+                    {
+                        LevelId = 5,
+                        Name = "Мастер",
+                        Description = "Высококлассный охотник, способный возглавлять большие группы и даже подразделения департамента, отвечающие за территории, " +
+                        "разумеется в зависимости от ранга. От этого же зависит на какую должность может претендовать мастер - старший охотник или главный охотник. " +
+                        "Становится куратором для подмастерий. Берутся за сложные задания (A). Эквивалентно подполковнику-полковнику в зависимости от должности.",
+                        LevelType = LevelType.Master
+                    },
+                    new Level
+                    {
+                        LevelId = 6,
+                        Name = "Грандмастер",
+                        Description = "Наиболее искуссный охотник, которым назначают решение задач особой сложности (S). Карьерный путь охотника такого уровня позволяет " +
+                        "ему быть главой департамента в качестве ведущего охотник департамента, члена ректората или ректора,члена совета ассоциации и даже магистра совета, вплоть до главы ассоциации. " +
+                        "Эквивалентно генеральским званиям в зависимости от должности.",
+                        LevelType = LevelType.GrandMaster
+                    }
+                );
+
+            modelBuilder.Entity<Rank>().HasData(
+                    new Rank
+                    {
+                        RankId = 1,
+                        Name = "Младший охотник",
+                        Description = "Этот ранг обычно носят новички и подмастерья, которые ещё не успели набраться опыта. С таким рангом они могут претендовать лишь на " +
+                        "должности младших представителей департамента, занимающихся стажировкой и вспомогательной работой.",
+                        RanksType = RanksType.Junior
+                    },
+                    new Rank
+                    {
+                        RankId = 2,
+                        Name = "Охотник",
+                        Description = "Ранг охотника могут получить подмастерья и охотники-специалисты, которые имеют стаж охоты более года, выполневших " +
+                        "более 15 E-задач и более 10 D-задач. Кроме того, они должны окончить магистратуру в академии. Это даст им право работать на должности " +
+                        "охотника-специалиста.",
+                        RanksType = RanksType.Middle
+                    },
+                    new Rank
+                    {
+                        RankId = 3,
+                        Name = "Старший охотник",
+                        Description = "Охотники этого ранга имеют охотники-специалисты и старшие охотники департамента с уровнем эксперт и стажем более 3 лет. " +
+                        "Также они должны окончить аспирантуру академии и иметь хотя бы одну специализацию общего типа. Существует требование в успешном участии в " +
+                        "10 C-задачах и 3 B-задачах.",
+                        RanksType = RanksType.Senior
+                    },
+                    new Rank
+                    {
+                        RankId = 4,
+                        Name = "Охотник высшей категории",
+                        Description = "Такой ранг позволяет занимать должность старшего, главного и высшего охотника департамента, а также занимать должность в ректорате, " +
+                        "совете ассоциации вплоть до её возглавления. В качестве требования к ней - не менее 7 лет стажа в охоте, учёная степень, 3 специализации общего типа " +
+                        "и одна специализация продвинутого типа. В качестве других требований - успешное участие в 10 B-задачах и 5 A-задачах."
+                    }
+                );
+
+            modelBuilder.Entity<PostGrade>().HasData(
+                    new PostGrade
+                    {
+                        PostGradeId = 1,
+                        Name = "Младший",
+                        Description = "Занимается не сложной работой, E и D-заданиями. Редко когда получают ответственные и сложные задачи. Является больше помощником, " +
+                        "чем основном охотником-специалистом. Эквивалентно рядовому.",
+                        PostGradeType = PostGradeType.Junior
+                    },
+                    new PostGrade
+                    {
+                        PostGradeId = 2,
+                        Name = "Специалист",
+                        Description = "Более-менее опытный охотник. Может руководить группой, если она сформирована при выполнении D-заданиях. " +
+                        "Если охотник способный - может быть назначен лидером при C-задаче. Выполняет основную работу, требующую определённых навыков и подразумевающую риск." +
+                        " Как правило, охотник-специалист, иногда эксперт. Эквивалентно сержантской-лейтенантской должности.",
+                        PostGradeType = PostGradeType.Middle
+                    },
+                    new PostGrade
+                    {
+                        PostGradeId = 3,
+                        Name = "Старший",
+                        Description = "Опытный охотник с уровнем не ниже эксперта и рангом не ниже старшего охотника. Может управлять подразделением по области, " +
+                        "то есть несколькими группами. Как правило, достаточно сильный боец и управленец, с хорошей базой знаний на определённую тему. " +
+                        "Руководит C, B - задачами. Эквивалентно капитанской-майорской должности.",
+                        PostGradeType = PostGradeType.Senior
+                    },
+                    new PostGrade
+                    {
+                        PostGradeId = 4,
+                        Name = "Главный",
+                        Description = "Глава нескольких подразделения. Обязательно охотник высшей категории. Руководит A-задачами и участвует в S-задачах. " +
+                        "Эквивалентно должности подполковника-полковника",
+                        PostGradeType = PostGradeType.Chief
+                    },
+                    new PostGrade
+                    {
+                        PostGradeId = 5,
+                        Name = "Высший",
+                        Description = "Глава департамента. Как правило, охотник уровня грандмастер, если таковые имеются. Может руководить S-задачами. " +
+                        "Эквивалетно генеральской должности.",
+                        PostGradeType = PostGradeType.Leader
+                    }
+                );
+
+            modelBuilder.Entity<TheoryDegree>().HasData(
+                    new TheoryDegree
+                    {
+                        TheoryDegreeId = 1,
+                        Name = "Абитуриент",
+                        Description = "Охотник, учащийся в академии наук, но ещё не окончивший её.",
+                        TheoryType = TheoryDegreeType.Applicant
+                    },
+                    new TheoryDegree
+                    {
+                        TheoryDegreeId = 2,
+                        Name = "Бакалавр",
+                        Description = "Охотник, выпустившийся из академии. Имеет право на стажировку в каком-либо департаменте на должности младшего охотника департамента.",
+                        TheoryType = TheoryDegreeType.Bachelor
+                    },
+                    new TheoryDegree
+                    {
+                        TheoryDegreeId = 3,
+                        Name = "Магистр",
+                        Description = "Охотник, получивший 3 степень теоретической подготовленности - магистр. При выполнении других требований открывается доступ к" +
+                        " должности охотника-специалиста департамента из-за прохождения более глубокого курса охотничьей деятельности.",
+                        TheoryType = TheoryDegreeType.Master
+                    },
+                    new TheoryDegree
+                    {
+                        TheoryDegreeId = 4,
+                        Name = "Аспирант",
+                        Description = "Охотник, получивший 4 степень теоретической подготовленности - аспирант. При выполнении других требований открывается доступ к " +
+                        "должности старший охотник департамента, прохождения курса об управлении подразделениями."
+                    },
+                    new TheoryDegree
+                    {
+                        TheoryDegreeId = 5,
+                        Name = "Учёный",
+                        Description = "Охотник, получивший 5 степень теоретической подготовленности - учёный. Он написал и защитил хотя бы одну кандидатскую диссертацию. " +
+                        "При выполнении других требований может занять должность главного охотника департамента, так как обладает большим объёмом знаний в определённой области.",
+                        TheoryType = TheoryDegreeType.AcademicDegree
+                    }
+                );
+
+            modelBuilder.Entity<AcademicRank>().HasData(
+                    new AcademicRank
+                    {
+                        AcademicRankId = 1,
+                        Name = "Научный сотрудник",
+                        Description = "Охотник, который занимается научной деятельностью. Может преподавать в зависимости от своей степени теоретической подготовленности. " +
+                        "Магистр может преподавать бакалавриат, аспирант - магистратуру",
+                        AcademicRankType = AcademicRankType.Scientist
+                    },
+                    new AcademicRank
+                    {
+                        AcademicRankId = 2,
+                        Name = "Доцент",
+                        Description = "Научный сотрудник, имеющий хотя бы одну защищённую кандидатскую степень, который провёл не " +
+                            "менее 15 научных изысканий. Он может обучать в академии на бакалавров, магистров и аспирантов, на общие специализации, а также быть помощником " +
+                            "в написании кандидатской диссертации для других соискателей",
+                        AcademicRankType = AcademicRankType.AssociateProfessor
+                    },
+                    new AcademicRank
+                    {
+                        AcademicRankId = 3,
+                        Name = "Профессор",
+                        Description = "Научный сотрудник, имеющий хотя бы одну защищённую докторскую степень, который провёл не менее 30 научных изысканийй. " +
+                        "Он может обучать на все степени теоретической подготовленности, на общие и продвинутые специализации, в зависимости от своих знаний. " +
+                        "Также он может быть помощиником в написании докторской диссертации для других соискателей."
+                    },
+                    new AcademicRank
+                    {
+                        AcademicRankId = 4,
+                        Name = "Академик",
+                        Description = "Научный сотрудник, имеющий более 3 диссертаций, который провёл не менее 60 научных изысканий. Он может обучать всему, в том числе на " +
+                        "элитные специализации. Руководит научными департаментами и выступает членом, магистром или главой совета ассоциации."
+                    }
+                );
+
+            modelBuilder.Entity<AcademicDegree>().HasData(
+                    new AcademicDegree
+                    {
+                        AcademicDegreeId = 1,
+                        Name = "Кандидат",
+                        Description = "Охотник, написавший и защитивший кандидатскую диссертацию по определённой области",
+                        AcademicDegreeType = AcademicDegreeType.Candidat
+                    },
+                    new AcademicDegree
+                    {
+                        AcademicDegreeId = 2,
+                        Name = "Доктор",
+                        Description = "Охотник, написавший и защитивший докторскую диссертацию по определённой области",
+                        AcademicDegreeType = AcademicDegreeType.Doctor
+                    }
+                );
+
+            modelBuilder.Entity<Status>().HasData(
+                    new Status
+                    {
+                        StatusId = 1,
+                        Name = "Без статуса",
+                        Description = "Охотник не успел получить статус.",
+                        StatusType = StatusType.None
+                    },
+                    new Status
+                    {
+                        StatusId = 2,
+                        Name = "Отличный охотник",
+                        Description = "Охотник со стажем больше пяти лет и рейтингом выше 3.5",
+                        StatusType = StatusType.ExcellentHunter
+                    },
+                    new Status
+                    {
+                        StatusId = 3,
+                        Name = "Охотник-ветеран",
+                        Description = "Охотник со стажем больше десяти лет и рейтингом выше 3.75",
+                        StatusType  = StatusType.Veteran
+                    },
+                    new Status
+                    {
+                        StatusId = 4,
+                        Name = "Охотник международного класса",
+                        Description = "Охотник со стажем больше 15 лет и рейтингом выше 4",
+                        StatusType = StatusType.InternationalClassHunter
+                    },
+                    new Status
+                    {
+                        StatusId = 5,
+                        Name = "Легендарный охотник",
+                        Description = "Охотник со стажем больше 20 лет и рейтингом выше 4.25",
+                        StatusType = StatusType.Legend
                     }
                 );
 
@@ -478,6 +841,48 @@ namespace Hunters_Game.Data
                 .HasForeignKey(h => h.DepartmentId)
                 .OnDelete(DeleteBehavior.NoAction);
 
+            modelBuilder.Entity<Hunter>()
+                .HasOne(h => h.Rank)
+                .WithMany()
+                .HasForeignKey(h => h.RankId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Hunter>()
+                .HasOne(h => h.Level)
+                .WithMany()
+                .HasForeignKey(h => h.LevelId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Hunter>()
+                .HasOne(h => h.TheoryDegree)
+                .WithMany()
+                .HasForeignKey(h => h.TheoryDegreeId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Hunter>()
+                .HasOne(h => h.Status)
+                .WithMany()
+                .HasForeignKey(h => h.StatusId)
+                .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Hunter>()
+               .HasOne(h => h.PostGrade)
+               .WithMany()
+               .HasForeignKey(h => h.PostGradeId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Hunter>()
+               .HasOne(h => h.AcademicDegree)
+               .WithMany()
+               .HasForeignKey(h => h.AcademicDegreeId)
+               .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<Hunter>()
+               .HasOne(h => h.AcademicRank)
+               .WithMany()
+               .HasForeignKey(h => h.AcademicRankId)
+               .OnDelete(DeleteBehavior.NoAction);
+
             modelBuilder.Entity<District>()
              .HasMany(d => d.Creatures)
              .WithOne()
@@ -520,24 +925,6 @@ namespace Hunters_Game.Data
             base.OnModelCreating(modelBuilder);
             ConfigureEntities(modelBuilder);
         }
-
-        public DbSet<Character> Characters { get; set; }
-        public DbSet<Hunter> Hunters { get; set; }
-        public DbSet<CharacterStat> Stats { get; set; }
-        public DbSet<HunterStat> HunterStats { get; set; }
-        public DbSet<Mail> Mails { get; set; }
-        public DbSet<Region> Regions { get; set; }
-        public DbSet<Territory> Territories { get; set; }
-        public DbSet<Area> Areas { get; set; }
-        public DbSet<City> Cities { get; set; }
-        public DbSet<District> Districts { get; set; }
-        public DbSet<Creature> Creatures { get; set; }
-        public DbSet<EnvironmentPropertiesDescription> EnvironmentPropertiesDescriptions { get; set; }
-        public DbSet<EnvironmentPropertiesCount> EnvironmentPropertiesCounts { get; set; }
-        public DbSet<EnvironmentPropertiesBoolean> EnvironmentPropertiesBooleans { get; set; }
-        public DbSet<Academy> Academies { get; set; }
-
-        public DbSet<Department> Departments { get; set; }
     }
 }
 

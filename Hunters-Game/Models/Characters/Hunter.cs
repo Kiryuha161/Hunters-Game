@@ -2,6 +2,7 @@
 using Hunters_Game.Models.Academies;
 using Hunters_Game.Models.Academies.Departments;
 using Hunters_Game.Models.Location;
+using Hunters_Game.Models.Ranks;
 using Hunters_Game.Models.Stat;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -39,6 +40,31 @@ namespace Hunters_Game.Models.Characters
         public int DepartmentId { get; set; }
         [ForeignKey("DepartmentId")]
         public Department Department { get; set; }
+        public int RankId { get; set; }
+        [ForeignKey("RankId")]
+        public Rank Rank { get; set; }
+        public int LevelId { get; set; }
+        [ForeignKey("LevelId")]
+        public Level Level { get; set; }
+        public int TheoryDegreeId { get; set; }
+        [ForeignKey("TheoryDegreeId")]
+        public TheoryDegree TheoryDegree { get; set; }
+        public int AcademicRankId { get; set; }
+        [ForeignKey("AcademicRankId")]
+        public AcademicRank AcademicRank { get; set; }
+        public int AcademicDegreeId { get; set; }
+        [ForeignKey("AcademicDegreeId")]
+        public AcademicDegree AcademicDegree { get; set; }
+        public int PostGradeId { get; set; }
+        [ForeignKey("PostGradeId")]
+        public PostGrade PostGrade { get; set; }
+        public int StatusId { get; set; }
+        [ForeignKey("StatusId")]
+        public Status Status { get; set; }
+        public float Rate { get; set; }
+        public int Stage { get; set; }
+        public DateTime StartHunt { get; set; }
+
 
         public void GetRandomInfo()
         {
@@ -92,7 +118,7 @@ namespace Hunters_Game.Models.Characters
             
             Activity = "Охотник";
             Birthday = Utils.GetRandomDate(1970, 2002);
-            Age = Utils.GetAge(Birthday, Utils.GetCurrentDate());
+            Age = Utils.СalculateDateDifference(Birthday, Utils.GetCurrentDate());
             MiddleName = "test";
             Type = "Человек";
             RegionId = 2;
@@ -118,6 +144,15 @@ namespace Hunters_Game.Models.Characters
             HunterStats = hunterStat;
             AcademyId = 1;
             DepartmentId = 3;
+            RankId = 1;
+            LevelId = 1;
+            AcademicDegreeId = 1;
+            AcademicRankId = 1;
+            TheoryDegreeId = 2;
+            StatusId = 1;
+            PostGradeId = 1;
+            StartHunt = Utils.GetCurrentDate();
+            Stage = Utils.СalculateDateDifference(StartHunt, Utils.GetCurrentDate());
         }
     }
 }
