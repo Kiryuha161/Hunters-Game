@@ -64,7 +64,10 @@ namespace Hunters_Game.Models.Characters
         public float Rate { get; set; }
         public int Stage { get; set; }
         public DateTime StartHunt { get; set; }
-
+        public int HunterSpecializationId { get; set; }
+        [ForeignKey("HunterSpecializationId")]
+        public HunterSpecialization HunterSpecialization { get; set; }
+        
 
         public void GetRandomInfo()
         {
@@ -151,6 +154,7 @@ namespace Hunters_Game.Models.Characters
             TheoryDegreeId = 2;
             StatusId = 1;
             PostGradeId = 1;
+            HuntersSpecalizationsId = 1;
             StartHunt = Utils.GetCurrentDate();
             Stage = Utils.СalculateDateDifference(StartHunt, Utils.GetCurrentDate());
         }

@@ -2,7 +2,37 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+@using Hunters_Game.Common.Utils
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<button class="btn btn-primary" id="addDayButton">Следующий день</button>
+<button class="btn btn-danger" id="resetDateButton">Сбросить дату</button>
+
+<script>
+    $(document).ready(function () {
+        $("#addDayButton").click(function () {
+            $.ajax({
+                url: "/Home/AddDay",
+                type: "POST",
+                success: function (response) {
+                    $("#currentDate").text(response);
+                }
+            });
+            window.location.href = "/Home/Index";
+        });
+        $("#resetDateButton").click(function () {
+            $.ajax({
+                url: "/Home/ResetDate",
+                type: "POST",
+                success: function (response) {
+                    $("#currentDate").text(response);
+                }
+            });
+            window.location.href = "/Home/Index";
+        });
+
+    });
+</script>
+
+<p>Текущая дата: @Utils.GetCurrentDate().ToString().Replace("0:00:00", "")</p>

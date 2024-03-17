@@ -1,5 +1,7 @@
-﻿using Hunters_Game.Models;
+﻿using Hunters_Game.Common.Utils;
+using Hunters_Game.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using System.Diagnostics;
 
 namespace Hunters_Game.Controllers
@@ -15,7 +17,20 @@ namespace Hunters_Game.Controllers
 
         public IActionResult Index()
         {
+            GetCurrentDate();
+
             return View();
+        }
+
+        public void GetCurrentDate()
+        {
+            DateTime currentDate = Utils.GetCurrentDate();
+            ViewBag.CurrentDate = currentDate.ToString().Replace("0:00:00", "");
+        }
+
+        public DateTime ReturnCurrentDate()
+        {
+            return Utils.GetCurrentDate();
         }
 
         public IActionResult Privacy()
@@ -27,6 +42,20 @@ namespace Hunters_Game.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        public IActionResult AddDay()
+        {
+            Utils.AddDay();
+
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult ResetDate()
+        {
+            Utils.ResetTime();
+
+            return RedirectToAction("Index");
         }
     }
 }

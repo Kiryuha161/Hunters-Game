@@ -6,7 +6,7 @@
     <title>@ViewData["Title"] - Hunters_Game</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/Hunters_Game.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
@@ -20,7 +20,7 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Mail" asp-action="Index">Почта</a>
@@ -32,6 +32,8 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Location" asp-action="Index">Локации</a>
                         </li>
                     </ul>
+                    @*@ViewBag.CurrentTime*@
+
                 </div>
             </div>
         </nav>
@@ -50,6 +52,24 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            var currentDateElement = $('<p id="currentDate"></p>');
+            $('.navbar-collapse').append(currentDateElement);
+
+            setInterval(function () {
+                $.ajax({
+                    url: "/Home/ReturnCurrentDate",
+                    type: "GET",
+                    success: function (response) {
+                        currentDateElement.text(response);
+                    }
+                });
+            }, 10); 
+        });
+    </script>
+
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

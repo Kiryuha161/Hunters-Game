@@ -3,6 +3,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection;
 using System;
 using System.ComponentModel;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hunters_Game.Common.Utils
 {
@@ -128,6 +129,8 @@ namespace Hunters_Game.Common.Utils
             return null;
         }
 
+        public static DateTime currentDate = new DateTime(2025, 1, 1);
+
         public static DateTime GetRandomDate(int startYear, int endYear)
         {
            Random random = new Random();
@@ -153,9 +156,21 @@ namespace Hunters_Game.Common.Utils
 
         public static DateTime GetCurrentDate()
         {
-            DateTime currentDate = new DateTime(2025, 1, 1);
-
             return currentDate;
+        }
+
+        public static void ResetTime()
+        {
+            currentDate = new DateTime(2025, 1, 1);
+        }
+
+        public static void AddDay()
+        {
+            DateTime timeForChange = GetCurrentDate();
+
+            timeForChange = timeForChange.AddDays(1);
+
+            currentDate = timeForChange;
         }
 
         public static string GetEnumDescription(Enum value)

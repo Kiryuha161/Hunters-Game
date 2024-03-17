@@ -38,7 +38,7 @@
                     <p>Степень теоретической подготовленности: @Model.Hunter.TheoryDegree.Name</p>
                     <p>Ученая степень: @Model.Hunter.AcademicDegree.Name</p>
                     <p>Ученое звание: @Model.Hunter.AcademicRank.Name</p>
-                    <p>Должность: @Model.Hunter.PostGrade.Name @Model.Hunter.Department.PostName</p>
+                    <p>Должность: @Model.Hunter.PostGrade.Name @Model.Hunter.Department.PostName.ToLower()</p>
                     <p>Стаж: @Model.Hunter.Stage</p>
                     <p>Начало карьеры: @Model.Hunter.StartHunt.ToString().Replace("0:00:00", "")</p>
                 </div>
