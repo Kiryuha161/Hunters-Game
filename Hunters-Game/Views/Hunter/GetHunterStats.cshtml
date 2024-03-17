@@ -1,12 +1,12 @@
-﻿@using Hunters_Game.Models.Characters
+﻿@using Hunters_Game.Models.ViewModels
 
-@model Hunter
+@model HunterViewModel
 
 <div class="container">
-    <h1 class="mb-5">@Model.SecondName @Model.FirstName</h1>
+    <h1 class="mb-5">@Model.Hunter.SecondName @Model.Hunter.FirstName</h1>
     <div class="row mb-5">
         <div class="col-6">
-            @if (Model.Gender)
+            @if (Model.Hunter.Gender)
             {
                 <img src="~/images/4378ee330c367ead2e2fb115f80cadda3ea2dacb.jpeg" style="width: 100%; height: 700px;" />
             }
@@ -16,18 +16,47 @@
             }
         </div>
         <div class="col-6">
-            <p>Дата рождения: @Model.Birthday.ToString().Replace("0:00:00", "")</p>
-            <p>Возраст: @Model.Age</p>
-            <p>Тип: @Model.Type</p>
-            <p>Деятельность: @Model.Activity</p>
-            <p>Текущее местоположение: @Model.CurrentLocation.Name</p>
-            <p title="@Model.Region.Desctription">Регион: @Model.Region.Name</p>
-            <p title="@Model.Territory.Desctription">Территория: @Model.Territory.Name</p>
-            <p title="@Model.Area.Desctription">Область: @Model.Area.Name</p>
-            <p title="@Model.City.Desctription">Город: @Model.City.Name</p>
-            <p title="@Model.Disсtrict.Desctription">Район: @Model.Disсtrict.Name</p>
-            <p title="@Model.Academy.Description">Академия: @Model.Academy.Name</p>
-            <p title="@Model.Department.Description">Департамент: @Model.Department.Name</p>
+            <div class="row">
+                <div class="col-6">
+                    <p>Дата рождения: @Model.Hunter.Birthday.ToString().Replace("0:00:00", "")</p>
+                    <p>Возраст: @Model.Hunter.Age</p>
+                    <p>Тип: @Model.Hunter.Type</p>
+                    <p>Деятельность: @Model.Hunter.Activity</p>
+                    <p>Текущее местоположение: @Model.Hunter.CurrentLocation.Name</p>
+                    <p title="@Model.Hunter.Region.Desctription">Регион: @Model.Hunter.Region.Name</p>
+                    <p title="@Model.Hunter.Territory.Desctription">Территория: @Model.Hunter.Territory.Name</p>
+                    <p title="@Model.Hunter.Area.Desctription">Область: @Model.Hunter.Area.Name</p>
+                    <p title="@Model.Hunter.City.Desctription">Город: @Model.Hunter.City.Name</p>
+                    <p title="@Model.Hunter.Disсtrict.Desctription">Район: @Model.Hunter.Disсtrict.Name</p>
+                    <p title="@Model.Hunter.Academy.Description">Академия: @Model.Hunter.Academy.Name</p>
+                </div>
+                <div class="col-6">
+                    <p title="@Model.Hunter.Department.Description">Департамент: @Model.Hunter.Department.Name</p>
+                    <p title="@Model.Hunter.Rank.Description">Ранг: @Model.Hunter.Rank.Name</p>
+                    <p>Уровень: @Model.Hunter.Level.Name</p>
+                    <p>Статус: @Model.Hunter.Status.Name</p>
+                    <p>Степень теоретической подготовленности: @Model.Hunter.TheoryDegree.Name</p>
+                    <p>Ученая степень: @Model.Hunter.AcademicDegree.Name</p>
+                    <p>Ученое звание: @Model.Hunter.AcademicRank.Name</p>
+                    <p>Должность: @Model.Hunter.PostGrade.Name @Model.Hunter.Department.PostName</p>
+                    <p>Стаж: @Model.Hunter.Stage</p>
+                    <p>Начало карьеры: @Model.Hunter.StartHunt.ToString().Replace("0:00:00", "")</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="mt-3">
+                        <form method="POST">
+                            <label asp-for="@Model.Hunter.Department.Name"> </label>
+                            <select asp-for="@Model.Hunter.DepartmentId" asp-items="@Model.Departments.Select(d => new SelectListItem { Text = d.Name, Value = d.DepartmentId.ToString() })" class="form-select" name="DepartmentId">
+                                <option> --Выбор департамента--</option>
+                            </select>
+                            <input asp-controller="Hunter" asp-action="SignDepartment" type="submit" class="btn btn-primary mt-3" value="Назначить департамент" asp-route-id="@Model.Hunter.CharacterId" asp-route-departmentId="@Model.Hunter.DepartmentId"/>
+                        </form> 
+                    </div>
+                    <a class="btn btn-secondary mt-3" asp-controller="Hunter" asp-action="Index">Назад</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -53,18 +82,18 @@
         </thead>
         <tbody>
             <tr>
-                <td hidden>@Model.CharacterId</td>
-                <td>@Model.HunterStats.Strength</td>
-                <td>@Model.HunterStats.Health</td>
-                <td>@Model.HunterStats.Reaction</td>
-                <td>@Model.HunterStats.SpeedAttack</td>
-                <td>@Model.HunterStats.SpeedMove</td>
-                <td>@Model.HunterStats.Endurance</td>
-                <td>@Model.HunterStats.Acuracy</td>
-                <td>@Model.HunterStats.Attentivines</td>
-                <td>@Model.HunterStats.Brave</td>
-                <td>@Model.HunterStats.GeneralKnowledge</td>
-                <td>@Model.HunterStats.HunterKnowledge</td>
+                <td hidden>@Model.Hunter.CharacterId</td>
+                <td>@Model.Hunter.HunterStats.Strength</td>
+                <td>@Model.Hunter.HunterStats.Health</td>
+                <td>@Model.Hunter.HunterStats.Reaction</td>
+                <td>@Model.Hunter.HunterStats.SpeedAttack</td>
+                <td>@Model.Hunter.HunterStats.SpeedMove</td>
+                <td>@Model.Hunter.HunterStats.Endurance</td>
+                <td>@Model.Hunter.HunterStats.Acuracy</td>
+                <td>@Model.Hunter.HunterStats.Attentivines</td>
+                <td>@Model.Hunter.HunterStats.Brave</td>
+                <td>@Model.Hunter.HunterStats.GeneralKnowledge</td>
+                <td>@Model.Hunter.HunterStats.HunterKnowledge</td>
             </tr>
         </tbody>
     </table>
@@ -86,17 +115,17 @@
         </thead>
         <tbody>
             <tr>
-                <td>@Model.HunterStats.Intellegence</td>
-                <td>@Model.HunterStats.Memory</td>
-                <td>@Model.HunterStats.Charisma</td>
-                <td>@Model.HunterStats.SpeedThinking</td>
-                <td>@Model.HunterStats.Leadership</td>
-                <td>@Model.HunterStats.WillPower</td>
-                <td>@Model.HunterStats.MagicEnegyControl</td>
-                <td>@Model.HunterStats.MagicEnergy</td>
-                <td>@Model.HunterStats.SurvivalSkill</td>
-                <td>@Model.HunterStats.TechnicalSkill
-                <td>@Model.HunterStats.Fortuna</td>
+                <td>@Model.Hunter.HunterStats.Intellegence</td>
+                <td>@Model.Hunter.HunterStats.Memory</td>
+                <td>@Model.Hunter.HunterStats.Charisma</td>
+                <td>@Model.Hunter.HunterStats.SpeedThinking</td>
+                <td>@Model.Hunter.HunterStats.Leadership</td>
+                <td>@Model.Hunter.HunterStats.WillPower</td>
+                <td>@Model.Hunter.HunterStats.MagicEnegyControl</td>
+                <td>@Model.Hunter.HunterStats.MagicEnergy</td>
+                <td>@Model.Hunter.HunterStats.SurvivalSkill</td>
+                <td>@Model.Hunter.HunterStats.TechnicalSkill
+                <td>@Model.Hunter.HunterStats.Fortuna</td>
             </tr>
         </tbody>
     </table>
@@ -104,31 +133,31 @@
 <div class="container">
     <h2>Бонусы</h2>
     <h3>Бонусы от города</h3>
-    @if (Model.CityId == 1)
+    @if (Model.Hunter.CityId == 1)
     {
         <p title="Скорость передвижения увеличена на 5">Провёл детство на футбольном стадионе в городе Ган</p>
     }
-    else if (Model.CityId == 2)
+    else if (Model.Hunter.CityId == 2)
     {
         <p title="Выносливость увеличена на 5">Проводил часто детство в горной местности в городе Мерра</p>
     }
-    else if (Model.CityId == 3)
+    else if (Model.Hunter.CityId == 3)
     {
         <p title="Интеллект увеличен на 5">Получил хорошее столичное образование в городе Плея</p>
-    } 
-    else if (Model.CityId == 4)
+    }
+    else if (Model.Hunter.CityId == 4)
     {
         <p title="Охотничьи знания увеличены на 5">Давно увлекался охотничьим делом в городе Аксель</p>
-    } 
-    else if (Model.CityId == 5)
+    }
+    else if (Model.Hunter.CityId == 5)
     {
         <p title="Харизма увеличена на 5">Провёл детство в окружении весьма харизматичных людей в городе Финея</p>
     }
-    else if (Model.CityId == 6)
+    else if (Model.Hunter.CityId == 6)
     {
         <p title="Здоровье увеличено на 5">Акклиматизирован ко многим условиям и достаточно закалён в нелёгких условиях жизни с детства в городе Рона</p>
     }
-    else if (Model.CityId == 8)
+    else if (Model.Hunter.CityId == 8)
     {
         <p title="Смелость и выживаемость увеличены на 5">Жил в опасных и сложных условиях в городе Сноуден</p>
     }

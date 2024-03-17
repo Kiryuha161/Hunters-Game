@@ -38,12 +38,14 @@
 
     public enum AcademicDegreeType 
     {
+        None,
         Candidat,
         Doctor
     }
 
     public enum AcademicRankType
     {
+        None,
         Scientist,
         AssociateProfessor,
         Professor,

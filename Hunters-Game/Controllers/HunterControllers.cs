@@ -1,9 +1,13 @@
 ﻿using Hunters_Game.Common.Utils;
 using Hunters_Game.Data;
+using Hunters_Game.Models.Academies.Departments;
 using Hunters_Game.Models.Characters;
 using Hunters_Game.Models.Stat;
+using Hunters_Game.Models.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
+using System.Diagnostics.Metrics;
 
 namespace Hunters_Game.Controllers
 {
@@ -28,6 +32,13 @@ namespace Hunters_Game.Controllers
                 .Include(h => h.CurrentLocation)
                 .Include(h => h.Academy)
                 .Include(h => h.Department)
+                .Include(h => h.Rank)
+                .Include(h => h.Level)
+                .Include(h => h.TheoryDegree)
+                .Include(h => h.Status)
+                .Include(h => h.AcademicRank)
+                .Include(h => h.AcademicDegree)
+                .Include(h => h.PostGrade)
                 .ToList();
 
             return View(hunters);
@@ -50,6 +61,13 @@ namespace Hunters_Game.Controllers
                 .Include(h => h.CurrentLocation)
                 .Include(h => h.Academy)
                 .Include(h => h.Department)
+                .Include(h => h.Rank)
+                .Include(h => h.Level)
+                .Include(h => h.TheoryDegree)
+                .Include(h => h.Status)
+                .Include(h => h.AcademicRank)
+                .Include(h => h.AcademicDegree)
+                .Include(h => h.PostGrade)
                 .FirstOrDefault(h => h.CharacterId == id);
 
             if (hunter == null)
@@ -57,7 +75,13 @@ namespace Hunters_Game.Controllers
                 return NotFound();
             }
 
-            return View(hunter);
+            HunterViewModel hunterViewModel = new HunterViewModel()
+            {
+                Hunter = hunter,
+                Departments = _database.Departments.ToList()
+            };
+
+            return View(hunterViewModel);
         }
 
 
@@ -69,20 +93,33 @@ namespace Hunters_Game.Controllers
             {
                 Hunter hunter = new Hunter();
                 hunter.GetRandomInfo();
-                hunter.Region = _database.Regions?.FirstOrDefault(h => h.RegionId == hunter.RegionId);
-                hunter.Territory = _database.Territories?.FirstOrDefault(h => h.TerritoryId == hunter.TerritoryId);
-                hunter.Area = _database.Areas?.FirstOrDefault(h => h.AreaId == hunter.AreaId);
-                hunter.City = _database.Cities?.FirstOrDefault(h => h.CityId == hunter.CityId);
-                hunter.Disсtrict = _database.Districts?.FirstOrDefault(h => h.DistrictId == hunter.DisсtrictId);
-                hunter.CurrentLocation = _database.Districts?.FirstOrDefault(h => h.DistrictId == hunter.CurrentLocationId);
-                hunter.Academy = _database.Academies?.FirstOrDefault(h => h.AcademyId == hunter.AcademyId);
-                hunter.Department = _database.Departments?.FirstOrDefault(h => h.DepartmentId == hunter.DepartmentId);
                 _database.Hunters.Add(hunter);
             }
 
             _database.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public IActionResult SignDepartment(int id, int departmentId)
+        {
+            Hunter hunter = _database.Hunters.Include(h => h.Department).FirstOrDefault(h => h.CharacterId == id);
+
+            if (hunter == null)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                hunter.DepartmentId = departmentId;
+
+                _database.SaveChanges();
+
+                return RedirectToAction("GetHunterStats", new { id = hunter.CharacterId });
+            }
+
+            return RedirectToAction("GetHunterStats");
         }
     }
 }

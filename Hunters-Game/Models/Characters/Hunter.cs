@@ -146,8 +146,8 @@ namespace Hunters_Game.Models.Characters
             DepartmentId = 3;
             RankId = 1;
             LevelId = 1;
-            AcademicDegreeId = 1;
-            AcademicRankId = 1;
+            AcademicDegreeId = 4;
+            AcademicRankId = 5;
             TheoryDegreeId = 2;
             StatusId = 1;
             PostGradeId = 1;
