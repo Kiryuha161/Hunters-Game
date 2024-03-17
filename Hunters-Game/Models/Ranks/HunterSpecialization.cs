@@ -8,13 +8,11 @@ namespace Hunters_Game.Models.Ranks
     {
             [Key]
             public int HunterSpecializationId { get; set; }
-            public int HunterId { get; set; }
             public int SpecializationId { get; set; }
-
-            [ForeignKey("HunterId")]
-            public Hunter Hunter { get; set; }
 
             [ForeignKey("SpecializationId")]
             public Specialization Specialization { get; set; }
+            public List<Hunter> Hunters { get; set; }
+
     }
 }

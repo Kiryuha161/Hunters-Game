@@ -1122,10 +1122,12 @@ namespace Hunters_Game.Data
                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Hunter>()
-                .HasMany(h => h.HunterSpecialization)
-                .WithMany()
-                .HasForeignKey(h => h.HuntersSpecalizationsId)
-                .OnDelete(DeleteBehavior.NoAction);
+                .HasMany(h => h.HunterSpecializations)
+                .WithMany();
+
+            modelBuilder.Entity<HunterSpecialization>()
+                .HasMany(h => h.Hunters)
+                .WithMany();
 
             modelBuilder.Entity<Specialization>()
                 .HasMany(s => s.Children)
